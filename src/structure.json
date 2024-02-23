@@ -1,0 +1,597 @@
+{
+  "pages": [
+    {
+      "title": "What are you reporting?",
+      "id": 1,
+      "nextId": 2,
+      "options": [
+        {
+          "label": {
+            "name": "Missing or incorrect printed information, for example timetables",
+            "nextId": 3
+          }
+        },
+        {
+          "label": {
+            "name": "A problem with an electronic display or audio",
+            "nextId": 6
+          }
+        },
+        {
+          "label": {
+            "name": "A fault with a bus shelter",
+            "nextId": 7
+          }
+        },
+        {
+          "label": {
+            "name": "A fault with a bus stop pole",
+            "nextId": 14
+          }
+        },
+        {
+          "label": {
+            "name": "A problem at a Park and Ride site",
+            "nextId": 15,
+            "skip": true
+          }
+        }
+      ]
+    },
+    {
+      "title": "Where is the problem happening?",
+      "title2": "Where is the incorrect information?",
+      "section": "1", 
+      "id": 2,
+      "nextId": 3,
+      "info": "We are only responsible for bus stops and Park and Ride sites in the West Midlands. If you live outside this area <a href=\"#\">report the issue to your local council.</a>",
+      "options": [
+        {
+          "label": "Town or area * <br /> For example, Halesowen",
+          "name": "town"
+        },
+        {
+          "label": "Street name *",
+          "name": "street"
+        },
+        {
+          "label": "Direction of travel <br /> For example, towwars Birmingham",
+          "name": "direction"
+        },
+        {
+          "label": "Bus shelter or pole number",
+          "name": "number"
+        }
+      ]
+    },
+    {
+      "title": "What's wrong with the printed information?",
+      "section": "1", 
+      "id": 3,
+      "nextId": 4,
+      "options": [
+        {
+          "label": "Details of the issue",
+          "name": "details"
+        }
+      ]
+    },
+    {
+      "title": "What is your name?",
+      "section": "2", 
+      "id": 4,
+      "nextId": 5,
+      "options": [
+        {
+          "label": "First name",
+          "name": "firstName"
+        },
+        {
+          "label": "Last name",
+          "name": "lastName"
+        }
+      ]
+    },
+    {
+      "title": "What are your contact details?",
+      "section": "2", 
+      "id": 5,
+      "options": [
+        {
+          "label": "Email address \n For example, name@example.com",
+          "name": "email"
+        },
+        {
+          "label": "Phone number \n For exmple, 07700900457",
+          "name": "phone"
+        }
+      ]
+    },
+    {
+      "title": "What's wrong with the electronic display or audio?",
+      "section": "1", 
+      "id": 6,
+      "nextId": 13,
+      "options": [
+        {
+          "label": {
+            "name": "The screen is blank or not displaying any information",
+            "nextId": null
+          }
+        },
+        {
+          "label": {
+            "name": "The prediction countdown is not accurate",
+            "nextId": null
+          }
+        },
+        {
+          "label": {
+            "name": "Bus services on the display don't match a printed timetable",
+            "nextId": null
+          }
+        },
+        {
+          "label": {
+            "name": "Clock is showing incorrect time",
+            "nextId": null
+          }
+        },
+        {
+          "label": {
+            "name": "Screen is on but not displaying correctly",
+            "nextId": null
+          }
+        },
+        {
+          "label": {
+            "name": "Screen is making loud beeping noises",
+            "nextId": null
+          }
+        }
+      ]
+    },
+    {
+      "title": "What colour is the bus shelter?",
+      "section": "1", 
+      "id": 7,
+      "nextId": 8,
+      "options": [
+        {
+          "label": "Blue"
+        },
+        {
+          "label": "Green"
+        },
+        {
+          "label": "Silver"
+        },
+        {
+          "label": "Another colour"
+        }
+      ]
+    },
+    {
+      "title": "What's wrong with the bus shelter?",
+      "section": "1", 
+      "id": 8,
+      "nextId": 12,
+      "options": [
+        {
+          "label": {
+            "name": "It's dirty or needs maintenance for example, it has graffiti",
+            "value": 9
+          }
+        },
+        {
+          "label": {
+            "name": "it's damaged for example, smashed glass or damaged seats",
+            "value": 10
+          }
+        },
+        {
+          "label": {
+            "name": "There are electrical problems for example, lights or screens don't work",
+            "value": 11
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is the maintenace issue?",
+      "section": "1", 
+      "id": 9,
+      "options": [
+        {
+          "label": {
+            "name": "There is a build up of leaves",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "it has graffiti",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "There is smashed glass",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "There is litter",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Fly tipping",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "It's overgrown or there are weeds",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Trees need pruning",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is damaged?",
+      "section": "1", 
+      "id": 10,
+      "options": [
+        {
+          "label": {
+            "name": "The bus stop sign is damaged",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Shelter framework is damaged",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Glass panels are broken or missing",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Shelter seats are damaged",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Timetable case is damaged or missing",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Advertising board is damaged",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Drainage or flooding problem",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "Footway is in poor condition",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is the electrical problem?",
+      "section": "1", 
+      "id": 11,
+      "options": [
+        {
+          "label": {
+            "name": "Lights are damaged or not working",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "The digital display is damaged or not working",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "electrical connection box is damaged",
+            "value": null
+          }
+        },
+        {
+          "label": {
+            "name": "There are exposed wires",
+            "value": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "section": "1", 
+      "nextId": 13
+    },
+    {
+      "title": "Do you have any other information?",
+      "section": "1", 
+      "id": 13,
+      "nextId": 4,
+      "options": [
+        {
+          "label": "Details of the issue",
+          "name": "details"
+        }
+      ]
+    },
+    {
+      "title": "What's wrong with the bus stop pole?",
+      "section": "1", 
+      "id": 14,
+      "nextId": 12,
+      "options": [
+        {
+          "label": {
+            "name": "There is something wrong with the sign or pole",
+            "value": 16
+          }
+        },
+        {
+          "label": {
+            "name": "There are electrical problems for example the screen doesn't work",
+            "value": 17
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is damaged?",
+      "section": "1", 
+      "id": 16,
+      "options": [
+        {
+          "label": {
+            "name": "Bus stop sign is damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "Pole is damaged or leading"
+          }
+        },
+        {
+          "label": {
+            "name": "Timetable case is damaged or missing"
+          }
+        },
+        {
+          "label": {
+            "name": "Footway is inm poor condition"
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is the electrical problem?",
+      "section": "1", 
+      "id": 17,
+      "options": [
+        {
+          "label": {
+            "name": "The digital display is damaged or not working"
+          }
+        },
+        {
+          "label": {
+            "name": "electrical connection box is damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "There are exposed wires"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Which Park and Ride is the problem at?",
+      "section": "1", 
+      "id": 15,
+      "nextId": 18,
+      "options": [
+        {
+          "label": "The Hawthrorns"
+        },
+        {
+          "label": "Wednesbury Parkway"
+        },
+        {
+          "label": "Black Lake"
+        },
+        {
+          "label": "Bradley Lane"
+        },
+        {
+          "label": "Priestfield"
+        }
+      ]
+    },
+    {
+      "title": "What's wrong with the Park and Ride?",
+      "section": "1", 
+      "id": 18,
+      "nextId": 12,
+      "options": [
+        {
+          "label": {
+            "name": "It's dirty or needs maintenance for example, it has graffiti",
+            "value": 19
+          }
+        },
+        {
+          "label": {
+            "name": "it's damaged for example, smashed glass or damaged seats",
+            "value": 20
+          }
+        },
+        {
+          "label": {
+            "name": "There are electrical problems for example, lights or screens don't work",
+            "value": 21
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is the maintenance issue?",
+      "section": "1", 
+      "id": 19,
+      "options": [
+        {
+          "label": {
+            "name": "There is a build up of leaves"
+          }
+        },
+        {
+          "label": {
+            "name": "it has graffiti"
+          }
+        },
+        {
+          "label": {
+            "name": "There is smashed glass"
+          }
+        },
+        {
+          "label": {
+            "name": "There is litter"
+          }
+        },
+        {
+          "label": {
+            "name": "Fly tipping"
+          }
+        },
+        {
+          "label": {
+            "name": "It's overgrown or there are weeds"
+          }
+        },
+        {
+          "label": {
+            "name": "Trees need pruning"
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is damaged?",
+      "section": "1", 
+      "id": 20,
+      "options": [
+        {
+          "label": {
+            "name": "Height barrier is damaged, open or unlocked"
+          }
+        },
+        {
+          "label": {
+            "name": "Bollards are damaged or missing"
+          }
+        },
+        {
+          "label": {
+            "name": "Signage is damaged or missing"
+          }
+        },
+        {
+          "label": {
+            "name": "Drainage or flooding problem"
+          }
+        },
+        {
+          "label": {
+            "name": "There is snow or ice"
+          }
+        },
+        {
+          "label": {
+            "name": "Footway or steps are damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "Road surface is damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "Speed humps are damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "Road markings are damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "A fence is damaged"
+          }
+        }
+      ]
+    },
+    {
+      "title": "What is the electrical problem?",
+      "section": "1", 
+      "id": 21,
+      "options": [
+        {
+          "label": {
+            "name": "Lights are damaged or not working"
+          }
+        },
+        {
+          "label": {
+            "name": "The digital display is damaged or not working"
+          }
+        },
+        {
+          "label": {
+            "name": "electrical connection box is damaged"
+          }
+        },
+        {
+          "label": {
+            "name": "There are exposed wires"
+          }
+        }
+      ]
+    }
+  ]
+}
