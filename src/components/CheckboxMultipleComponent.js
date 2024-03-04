@@ -6,18 +6,25 @@ import { FormDataContext } from '../globalState/FormDataContext';
 import { Radios, ButtonCta, TextInput, Checkboxes } from 'wmca-shared-components';
 
 const CheckboxMultipleComponent = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
-  const { currentStep } = formDataState;
+  const { currentStep, formData } = formDataState;
   const [pageData, setPageData] = useState([]);
   const [checkBoxData, setCheckBoxData] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
-    // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
-
-  }, [currentStep]);
+    if (currentPageData && formData.length > 0) {
+      const matchingData = formData.find(data => data.pageId === currentStep);
+      if (matchingData) {
+        setSelectedOptions(matchingData.selectedOptions);
+      }
+    } else {
+      setSelectedOptions([]);
+    }
+  }, [currentStep, formData]);
 
   useEffect(() => {
     // Function to find the matching object
@@ -30,14 +37,16 @@ const CheckboxMultipleComponent = () => {
       }
       setCheckBoxData(matchedPagesArray);
     };
-
     // Call the function to find the matching object
     findMatchingPages();
   }, []);
 
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleCheckboxChange = (value, isChecked) => {
+
+    console.log(value, 'value!!!')
+    console.log(isChecked, 'value!!!')
+
     if (isChecked) {
       setSelectedOptions([...selectedOptions, value]); // Add the value to selectedOptions
     } else {
@@ -46,9 +55,20 @@ const CheckboxMultipleComponent = () => {
   };
 
   const redirect = () => {
+    console.log(selectedOptions, 'here multiple checkbox page')
+    const payload = {
+      selectedOptions,
+      "pageId": pageData.id
+    }
+
+    formDataDispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload
+    });
+
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: pageData?.nextId, currentStep: currentStep, futureStep: selectedOptions }, // Increment the current step
+      payload: { nextStep: pageData?.nextId, currentStep: currentStep }, // Increment the current step
     });
   };
 
@@ -70,6 +90,7 @@ const CheckboxMultipleComponent = () => {
                 options={page.options.map(option => ({
                   label: option.label.name,
                   value: option.label.value,
+                  checked: selectedOptions.includes(option.label.value),
                 }))}
               />
             )}

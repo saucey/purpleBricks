@@ -13,11 +13,24 @@ const UploadDetailsComponent = () => {
 
   useEffect(() => {
     // Filter the page data based on the current step ID
-    const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
+    const currentPageData = reportFormData.pages.find(page => page.id === currentStep);   
     setPageData(currentPageData);
+    console.log(formDataState, 'state of the whole object')
+    
   }, [currentStep]);
 
   const redirect = () => {
+
+    const payload = {
+      textareaValue,
+      "pageId": pageData.id
+    }
+
+    formDataDispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload
+    });
+
     formDataDispatch({
       type: 'UPDATE_STEP',
       payload: { nextStep: pageData?.nextId, currentStep: currentStep },

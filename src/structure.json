@@ -116,37 +116,37 @@
         {
           "label": {
             "name": "The screen is blank or not displaying any information",
-            "nextId": null
+            "value": "The screen is blank or not displaying any information"
           }
         },
         {
           "label": {
             "name": "The prediction countdown is not accurate",
-            "nextId": null
+            "value": "The prediction countdown is not accurate"
           }
         },
         {
           "label": {
             "name": "Bus services on the display don't match a printed timetable",
-            "nextId": null
+            "value": "Bus services on the display don't match a printed timetable"
           }
         },
         {
           "label": {
             "name": "Clock is showing incorrect time",
-            "nextId": null
+            "value": "Clock is showing incorrect time"
           }
         },
         {
           "label": {
             "name": "Screen is on but not displaying correctly",
-            "nextId": null
+            "value": "Screen is on but not displaying correctly"
           }
         },
         {
           "label": {
             "name": "Screen is making loud beeping noises",
-            "nextId": null
+            "value": "Screen is making loud beeping noises"
           }
         }
       ]
@@ -205,43 +205,43 @@
         {
           "label": {
             "name": "There is a build up of leaves",
-            "value": null
+            "value": "There is a build up of leaves"
           }
         },
         {
           "label": {
             "name": "it has graffiti",
-            "value": null
+            "value": "it has graffiti"
           }
         },
         {
           "label": {
             "name": "There is smashed glass",
-            "value": null
+            "value": "There is smashed glass"
           }
         },
         {
           "label": {
             "name": "There is litter",
-            "value": null
+            "value": "There is litter"
           }
         },
         {
           "label": {
             "name": "Fly tipping",
-            "value": null
+            "value": "Fly tipping"
           }
         },
         {
           "label": {
             "name": "It's overgrown or there are weeds",
-            "value": null
+            "value": "It's overgrown or there are weeds"
           }
         },
         {
           "label": {
             "name": "Trees need pruning",
-            "value": null
+            "value": "Trees need pruning"
           }
         }
       ]
@@ -254,49 +254,49 @@
         {
           "label": {
             "name": "The bus stop sign is damaged",
-            "value": null
+            "value": "The bus stop sign is damaged"
           }
         },
         {
           "label": {
             "name": "Shelter framework is damaged",
-            "value": null
+            "value": "Shelter framework is damaged"
           }
         },
         {
           "label": {
             "name": "Glass panels are broken or missing",
-            "value": null
+            "value": "Glass panels are broken or missing"
           }
         },
         {
           "label": {
             "name": "Shelter seats are damaged",
-            "value": null
+            "value": "Shelter seats are damaged"
           }
         },
         {
           "label": {
             "name": "Timetable case is damaged or missing",
-            "value": null
+            "value": "Timetable case is damaged or missing"
           }
         },
         {
           "label": {
             "name": "Advertising board is damaged",
-            "value": null
+            "value": "Advertising board is damaged"
           }
         },
         {
           "label": {
             "name": "Drainage or flooding problem",
-            "value": null
+            "value": "Drainage or flooding problem"
           }
         },
         {
           "label": {
             "name": "Footway is in poor condition",
-            "value": null
+            "value": "Footway is in poor condition"
           }
         }
       ]
@@ -309,25 +309,25 @@
         {
           "label": {
             "name": "Lights are damaged or not working",
-            "value": null
+            "value": "Lights are damaged or not working"
           }
         },
         {
           "label": {
             "name": "The digital display is damaged or not working",
-            "value": null
+            "value": "The digital display is damaged or not working"
           }
         },
         {
           "label": {
             "name": "electrical connection box is damaged",
-            "value": null
+            "value": "electrical connection box is damaged"
           }
         },
         {
           "label": {
             "name": "There are exposed wires",
-            "value": null
+            "value": "There are exposed wires"
           }
         }
       ]
@@ -376,22 +376,26 @@
       "options": [
         {
           "label": {
-            "name": "Bus stop sign is damaged"
+            "name": "Bus stop sign is damaged",
+            "value": "Bus stop sign is damaged"
           }
         },
         {
           "label": {
-            "name": "Pole is damaged or leading"
+            "name": "Pole is damaged or leading",
+            "value": "Pole is damaged or leading"
           }
         },
         {
           "label": {
-            "name": "Timetable case is damaged or missing"
+            "name": "Timetable case is damaged or missing",
+            "value": "Timetable case is damaged or missing"
           }
         },
         {
           "label": {
-            "name": "Footway is inm poor condition"
+            "name": "Footway is inm poor condition",
+            "value": "Footway is inm poor condition"
           }
         }
       ]
@@ -403,17 +407,20 @@
       "options": [
         {
           "label": {
-            "name": "The digital display is damaged or not working"
+            "name": "The digital display is damaged or not working",
+            "value": "The digital display is damaged or not working"
           }
         },
         {
           "label": {
-            "name": "electrical connection box is damaged"
+            "name": "electrical connection box is damaged",
+            "value": "electrical connection box is damaged"
           }
         },
         {
           "label": {
-            "name": "There are exposed wires"
+            "name": "There are exposed wires",
+            "value": "There are exposed wires"
           }
         }
       ]
@@ -474,37 +481,44 @@
       "options": [
         {
           "label": {
-            "name": "There is a build up of leaves"
+            "name": "There is a build up of leaves",
+            "value": "There is a build up of leaves"
           }
         },
         {
           "label": {
-            "name": "it has graffiti"
+            "name": "it has graffiti",
+            "value": "it has graffiti"
           }
         },
         {
           "label": {
-            "name": "There is smashed glass"
+            "name": "There is smashed glass",
+            "value": "There is smashed glass"
           }
         },
         {
           "label": {
-            "name": "There is litter"
+            "name": "There is litter",
+            "value": "There is litter"
           }
         },
         {
           "label": {
-            "name": "Fly tipping"
+            "name": "Fly tipping",
+            "value": "Fly tipping"
           }
         },
         {
           "label": {
-            "name": "It's overgrown or there are weeds"
+            "name": "It's overgrown or there are weeds",
+            "value": "It's overgrown or there are weeds"
           }
         },
         {
           "label": {
-            "name": "Trees need pruning"
+            "name": "Trees need pruning",
+            "value": "Trees need pruning"
           }
         }
       ]
@@ -516,52 +530,62 @@
       "options": [
         {
           "label": {
-            "name": "Height barrier is damaged, open or unlocked"
+            "name": "Height barrier is damaged, open or unlocked",
+            "value": "Height barrier is damaged, open or unlocked"
           }
         },
         {
           "label": {
-            "name": "Bollards are damaged or missing"
+            "name": "Bollards are damaged or missing",
+            "value": "Bollards are damaged or missing"
           }
         },
         {
           "label": {
-            "name": "Signage is damaged or missing"
+            "name": "Signage is damaged or missing",
+            "value": "Signage is damaged or missing"
           }
         },
         {
           "label": {
-            "name": "Drainage or flooding problem"
+            "name": "Drainage or flooding problem",
+            "value": "Drainage or flooding problem"
           }
         },
         {
           "label": {
-            "name": "There is snow or ice"
+            "name": "There is snow or ice",
+            "value": "There is snow or ice"
           }
         },
         {
           "label": {
-            "name": "Footway or steps are damaged"
+            "name": "Footway or steps are damaged",
+            "value": "Footway or steps are damaged"
           }
         },
         {
           "label": {
-            "name": "Road surface is damaged"
+            "name": "Road surface is damaged",
+            "value": "Road surface is damaged"
           }
         },
         {
           "label": {
-            "name": "Speed humps are damaged"
+            "name": "Speed humps are damaged",
+            "value": "Speed humps are damaged"
           }
         },
         {
           "label": {
-            "name": "Road markings are damaged"
+            "name": "Road markings are damaged",
+            "value": "Road markings are damaged"
           }
         },
         {
           "label": {
-            "name": "A fence is damaged"
+            "name": "A fence is damaged",
+            "value": "A fence is damaged"
           }
         }
       ]
@@ -573,22 +597,26 @@
       "options": [
         {
           "label": {
-            "name": "Lights are damaged or not working"
+            "name": "Lights are damaged or not working",
+            "value": "Lights are damaged or not working"
           }
         },
         {
           "label": {
-            "name": "The digital display is damaged or not working"
+            "name": "The digital display is damaged or not working",
+            "value": "The digital display is damaged or not working"
           }
         },
         {
           "label": {
-            "name": "electrical connection box is damaged"
+            "name": "electrical connection box is damaged",
+            "value": "electrical connection box is damaged"
           }
         },
         {
           "label": {
-            "name": "There are exposed wires"
+            "name": "There are exposed wires",
+            "value": "There are exposed wires"
           }
         }
       ]

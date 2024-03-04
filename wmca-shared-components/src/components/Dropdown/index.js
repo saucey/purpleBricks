@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Dropdown = ({ label, id, name, options, hasError, errorMessage, onSelectChange }) => {
+const Dropdown = ({ label, id, name, options, hasError, errorMessage, onSelectChange, preselectedValue }) => {
+
   const handleSelectChange = (event) => {
     const selectedValue = event.target.value;
     onSelectChange(selectedValue);
@@ -21,6 +22,7 @@ const Dropdown = ({ label, id, name, options, hasError, errorMessage, onSelectCh
           id={id}
           name={name}
           onChange={handleSelectChange}
+          value={preselectedValue}
         >
           {updatedOptions.map((option) => (
             <option key={option.value} value={option.value}>

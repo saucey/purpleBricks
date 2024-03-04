@@ -17,12 +17,12 @@ const Checkboxes = ({ options, title, onCheckboxChange, hasError, errorMessage }
           <label key={index} className="wmnds-fe-checkboxes__container">
             <div className="wmnds-m-b-lg">{option.label}</div>
             <input
-              id={`error-checkboxes_option${index + 1}`}
+              id={`checkboxes_option${index + 1}`}
               className="wmnds-fe-checkboxes__input"
               value={option.value}
-              name={`error-checkboxes_option${index + 1}`}
+              name={`checkboxes_option${index + 1}`}
               type="checkbox"
-              defaultChecked={option.checked}
+              checked={option.checked}
               onChange={(e) => handleCheckboxChange(option.value, e.target.checked)}
             />
             <span className="wmnds-fe-checkboxes__checkmark">

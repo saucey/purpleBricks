@@ -10,21 +10,34 @@ export const FormDataProvider = (props) => {
     currentStep: 1,
     futureStep: null,
     previousSteps: [], // Store previous steps in an array
-    formData: {},
+    formData: [],
     hasReachedConfirmation: false,
   };
 
   // Reducer function
   const reducer = (state, action) => {
-
-    console.log(state.previousSteps, 'prev')
-    console.log(state.currentStep, 'current')
+    
+    // console.log(state.previousSteps, 'prev')
+    // console.log(state.currentStep, 'current')
     // console.log(action.payload.futureStep, 'Further')
     switch (action.type) {
       case 'UPDATE_FORM_DATA': {
+        let found = false;
+        const updatedFormData = state.formData.map(item => {
+          if (item.pageId === action.payload.pageId) {
+            found = true;
+            return action.payload;
+          }
+          return item;
+        });
+
+        if (!found) {
+          updatedFormData.push(action.payload);
+        }
+
         return {
           ...state,
-          formData: { ...state.formData, ...action.payload },
+          formData: updatedFormData,
         };
       }
       case 'UPDATE_STEP': {

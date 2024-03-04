@@ -444,12 +444,12 @@ const Checkboxes = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "wmnds-m-b-lg"
   }, option.label), /*#__PURE__*/React.createElement("input", {
-    id: `error-checkboxes_option${index + 1}`,
+    id: `checkboxes_option${index + 1}`,
     className: "wmnds-fe-checkboxes__input",
     value: option.value,
-    name: `error-checkboxes_option${index + 1}`,
+    name: `checkboxes_option${index + 1}`,
     type: "checkbox",
-    defaultChecked: option.checked,
+    checked: option.checked,
     onChange: e => handleCheckboxChange(option.value, e.target.checked)
   }), /*#__PURE__*/React.createElement("span", {
     className: "wmnds-fe-checkboxes__checkmark"
@@ -468,7 +468,8 @@ const Dropdown = ({
   options,
   hasError,
   errorMessage,
-  onSelectChange
+  onSelectChange,
+  preselectedValue
 }) => {
   const handleSelectChange = event => {
     const selectedValue = event.target.value;
@@ -493,7 +494,8 @@ const Dropdown = ({
     className: "wmnds-fe-dropdown__select",
     id: id,
     name: name,
-    onChange: handleSelectChange
+    onChange: handleSelectChange,
+    value: preselectedValue
   }, updatedOptions.map(option => /*#__PURE__*/React.createElement("option", {
     key: option.value,
     value: option.value

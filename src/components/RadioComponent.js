@@ -4,19 +4,31 @@ import { FormDataContext } from '../globalState/FormDataContext';
 import { Radios, ButtonCta } from 'wmca-shared-components';
 import reportFormData from '../structure.json';
 
+import { transformString } from '../utils/index'
+
 const RadioComponent = () => {
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
-  const { currentStep } = formDataState;
+  const { currentStep, formData } = formDataState;
   const [pageData, setPageData] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(''); // Initial selected option
+  // const [pageDataState, setPageDataState] = useState(null);
+  const [error, setError] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(undefined); // Initial selected option
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
-
-  }, [currentStep]);
+    // Initialize inputValues with data from formData
+    if (pageData && formData.length > 0) {
+      const matchingData = formData.find(data => data.pageId === currentStep);
+      if (matchingData) {
+        setSelectedOption(matchingData.selectedOption);
+      }
+    } else {
+      // If no formData or pageData, set inputValues to empty object
+      setSelectedOption(undefined);
+    }
+  }, [currentStep, formData, pageData]);
 
   const handleSelect = (value) => {
     console.log(value)
@@ -24,11 +36,28 @@ const RadioComponent = () => {
   };
 
   const redirect = () => {
+    setError(selectedOption === undefined ? true : false);
+    if (selectedOption === undefined) {
+      return
+    }
+    const payload = {
+      selectedOption,
+      "pageId": pageData.id
+    }
+
     formDataDispatch({
       type: 'UPDATE_STEP',
       payload: { nextStep: selectedOption?.skip ? selectedOption?.nextId : pageData?.nextId, currentStep: currentStep, futureStep: selectedOption.nextId }, // Increment the current step
     });
+
+    formDataDispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload 
+    });
+    
   };
+
+  
 
   return (
     <>
@@ -41,6 +70,7 @@ const RadioComponent = () => {
             <Radios
               name="whats-reporting"
               descriptionText={false}
+              error={error}
               defaultSelected={selectedOption}
               onSelect={handleSelect}
               options={pageData.options.map(option => ({

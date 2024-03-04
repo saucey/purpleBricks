@@ -4,42 +4,61 @@ import reportFormData from '../structure.json';
 import { FormDataContext } from '../globalState/FormDataContext';
 
 import { Radios, ButtonCta, TextInput, Checkboxes } from 'wmca-shared-components';
-
 const CheckboxComponent = () => {
   const navigate = useNavigate();
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
-  const { currentStep } = formDataState;
+  const { currentStep, formData } = formDataState;
   const [pageData, setPageData] = useState(null);
+  const [hasError, setHasError] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
-    // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
-
-  }, [currentStep]);
-
-  const [selectedOptions, setSelectedOptions] = useState([]);
+    if (currentPageData && formData.length > 0) {
+      const matchingData = formData.find(data => data.pageId === currentStep);
+      if (matchingData) {
+        setSelectedOptions(matchingData.selectedOptions);
+      }
+    } else {
+      setSelectedOptions([]);
+    }
+  }, [currentStep, formData]);
 
   const handleCheckboxChange = (value, isChecked) => {
     if (isChecked) {
-      setSelectedOptions([...selectedOptions, value]); // Add the value to selectedOptions
+      setSelectedOptions([...selectedOptions, value]);
     } else {
-      setSelectedOptions(selectedOptions.filter(option => option !== value)); // Remove the value from selectedOptions
+      setSelectedOptions(selectedOptions.filter(option => option !== value));
     }
   };
 
   const redirect = () => {
+
+    if (selectedOptions.length === 0) {
+      setHasError(true)
+      return
+    }
+
+    const payload = {
+      selectedOptions,
+      "pageId": pageData.id
+    }
+
+    formDataDispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload
+    });
+
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: pageData?.nextId, currentStep: currentStep, futureStep: selectedOptions }, // Increment the current step
+      payload: { nextStep: pageData?.nextId, currentStep: currentStep, futureStep: selectedOptions },
     });
   };
-
 
   return (
     <>
       {pageData && (
-
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
           <div className="wmnds-progress-indicator">
             Section {pageData.section} of 2
@@ -48,18 +67,17 @@ const CheckboxComponent = () => {
           <h1 className="heading-2">{pageData.title}</h1>
           {pageData.options && (
             <Checkboxes
+              title={pageData.title}
               onCheckboxChange={handleCheckboxChange}
               options={pageData.options.map(option => ({
                 label: option.label.name,
                 value: option.label.value,
+                checked: selectedOptions.includes(option.label.value),
               }))}
+              hasError={hasError}
+              errorMessage={'Please select your options'}
             />
           )}
-          <ul>
-            {selectedOptions.map((option, index) => (
-              <li key={index}>{option}</li>
-            ))}
-          </ul>
           <ButtonCta label="Continue" onClick={() => redirect()} />
         </div>
       )}

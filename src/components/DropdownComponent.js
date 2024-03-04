@@ -7,19 +7,45 @@ import { Radios, ButtonCta, TextInput, Checkboxes, Dropdown } from 'wmca-shared-
 
 const DropdownComponent = () => {
   const navigate = useNavigate();
-
+  
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
-  const { currentStep } = formDataState;
+  const { currentStep, formData } = formDataState;
   const [pageData, setPageData] = useState(null);
+  const [selectedValue, setSelectedValue] = useState('');
 
+  
   useEffect(() => {
-    // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
-
-  }, [currentStep]);
+    // Initialize inputValues with data from formData
+    if (pageData && formData.length > 0) {
+      const matchingData = formData.find(data => data.pageId === currentStep);
+      if (matchingData) {
+        setSelectedValue(matchingData.selectedValue);
+      } 
+    } else {
+      // If no formData or pageData, set inputValues to empty object
+      setSelectedValue('');
+    }
+  }, [currentStep, formData, pageData]);
 
   const redirect = () => {
+
+    if (!selectedValue) {
+      setHasError(true)
+      return
+    }
+
+    const payload = {
+      selectedValue,
+      "pageId": pageData.id
+    }
+
+    formDataDispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload
+    });
+
     formDataDispatch({
       type: 'UPDATE_STEP',
       payload: { nextStep: pageData?.nextId, currentStep: currentStep }, // Increment the current step
@@ -28,11 +54,9 @@ const DropdownComponent = () => {
 
 
   // State to manage the selected value
-  const [selectedValue, setSelectedValue] = useState('');
 
   // State for error handling
   const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   // Function to handle changes in the dropdown selection
   const handleSelectChange = (selectedValue) => {
@@ -41,10 +65,8 @@ const DropdownComponent = () => {
     // For example, if you want to ensure the user has selected an option
     if (!selectedValue) {
       setHasError(true);
-      setErrorMessage('Please select an option.');
     } else {
       setHasError(false);
-      setErrorMessage('');
     }
   };
 
@@ -64,6 +86,10 @@ const DropdownComponent = () => {
               options={pageData.options.map(option => ({
                 label: option.label,
               }))}
+              onSelectChange={handleSelectChange}
+              preselectedValue={selectedValue}
+              hasError={hasError}
+              errorMessage={'Please select an option.'}
             />
           )}
           <ButtonCta label="Continue" onClick={() => redirect()} />
