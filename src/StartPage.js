@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 
 const StartPage = () => {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
 
   const redirect = () => {
     navigate('/reporting')
@@ -55,6 +55,7 @@ const StartPage = () => {
   return (
     start()
   );
+  
 }
 
 

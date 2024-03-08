@@ -46,9 +46,15 @@ const DropdownComponent = () => {
       payload
     });
 
+    let nextPage = pageData?.nextId
+
+    if (formDataState.answerChecks) {
+      nextPage = 22
+    }
+
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: pageData?.nextId, currentStep: currentStep }, // Increment the current step
+      payload: { nextStep: nextPage, currentStep: currentStep }, // Increment the current step
     });
   };
 
@@ -75,6 +81,7 @@ const DropdownComponent = () => {
     <>
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
+          <h1>{currentStep}</h1>
           <div className="wmnds-progress-indicator">
             Section {pageData.section} of 2
             <h4>About the issue</h4>

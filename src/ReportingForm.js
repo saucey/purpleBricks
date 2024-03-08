@@ -6,6 +6,7 @@ import UploadDetailsComponent from './components/UploadDetailsComponent';
 import CheckboxComponent from './components/CheckboxComponent';
 import DropdownComponent from './components/DropdownComponent';
 import CheckboxMultipleComponent from './components/CheckboxMultipleComponent';
+import AnswerCheckComponent from './components/AnswerCheckComponent';
 
 const ReportingForm = () => {
   const [formDataState] = useContext(FormDataContext);
@@ -29,6 +30,7 @@ const ReportingForm = () => {
     14: <CheckboxComponent />,
     15: <DropdownComponent />,
     18: <CheckboxComponent />,
+    22: <AnswerCheckComponent />,
     // 9: <CheckboxComponent />,
     // 10: <CheckboxComponent />,
     // 11: <CheckboxComponent />,

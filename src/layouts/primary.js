@@ -10,9 +10,13 @@ const AppLayoutPrimary = ({ children }) => {
 
   const goBack = (e) => {
     e.preventDefault(); // Corrected typo
-    console.log(formDataState, 'state back')
     formDataDispatch({
       type: 'GO_BACK',
+    });
+
+    formDataDispatch({
+      type: 'REACHED_ANSWER_CHECKS',
+      payload: { answerChecks: false },
     });
   };
 

@@ -9,13 +9,13 @@ const TextInputComponent = () => {
   const { currentStep, futureStep, formData } = formDataState;
   const [pageData, setPageData] = useState(null);
   const [inputValues, setInputValues] = useState({}); // Initialize as empty object
+  const [errors, setErrors] = useState({}); 
 
   
   useEffect(() => {
     // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
-    console.log(formDataState, 'state of the whole object')
     // Initialize inputValues with data from formData
     if (pageData && formData.length > 0) {
       const matchingData = formData.find(data => data.pageId === currentStep);
@@ -35,26 +35,75 @@ const TextInputComponent = () => {
     }
   }, [currentStep, formData, pageData]);
 
+  // useEffect(() => {
+  //   const validationRules = pageData?.validation?.rules;
+  //   if (validationRules) {
+  //     const updatedErrors = {};
+  //     Object.entries(validationRules).forEach(([fieldName, rules]) => {
+  //       const fieldValue = inputValues[fieldName];
+  //       const isRequired = rules.required;
+  //       updatedErrors[fieldName] = isRequired && !fieldValue?.trim();
+  //     });
+  //     setErrors(updatedErrors);
+  //   }
+  // }, [inputValues]);
+
   const redirect = () => {
+    const validationRules = pageData?.validation?.rules;
+      if (validationRules) {
+        const updatedErrors = {};
+        let hasError = false; // Flag to track if any errors are found
+
+        Object.entries(validationRules).forEach(([fieldName, rules]) => {
+          const fieldValue = inputValues[fieldName];
+          const isRequired = rules.required;
+          updatedErrors[fieldName] = isRequired && !fieldValue?.trim();
+
+          if (updatedErrors[fieldName]) {
+            hasError = true; // Set the flag if any error is found
+          }
+        });
+
+        setErrors(updatedErrors);
+
+        if (hasError) {
+          return; // Prevent form submission if errors exist
+        }
+      }
+    
+
+
     const payload = {
       inputValues,
       pageId: pageData.id
     };
-
+    
+    let nextPage = currentStep === 2 ? formDataState.futureStep : pageData.nextId;
+    
+    if (formDataState.answerChecks) {
+      nextPage = 22
+    }
+    
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: currentStep === 2 ? formDataState.futureStep : pageData.nextId, currentStep },
+      payload: { nextStep: nextPage, currentStep },
     });
-
+    
     formDataDispatch({
       type: 'UPDATE_FORM_DATA',
       payload,
     });
   };
-
+  
   // Function to handle input change
   const handleInputChange = (event, name) => {
-    setInputValues({ ...inputValues, [name]: event.target.value });
+    const { value } = event.target;
+    setInputValues({ ...inputValues, [name]: value });
+
+    const validationRules = pageData?.validation?.rules;
+    if (validationRules && validationRules[name]?.required) {
+      setErrors({ ...errors, [name]: value ? !value.trim() : true });
+    }
   };
 
   return (
@@ -84,8 +133,8 @@ const TextInputComponent = () => {
               id={option.name}
               name={option.name}
               label={<span dangerouslySetInnerHTML={{ __html: option.label }} />}
-              errorMessage="Please enter a valid value"
-              isError={false}
+              errorMessage={errors[option.name] && "This field is required"}
+              isError={errors[option.name]}
               value={inputValues[option.name]}
               onChange={event => handleInputChange(event, option.name)}
               placeholder="Enter your value"

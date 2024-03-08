@@ -9,6 +9,7 @@ export const FormDataProvider = (props) => {
   const initialState = {
     currentStep: 1,
     futureStep: null,
+    answerChecks: false,
     previousSteps: [], // Store previous steps in an array
     formData: [],
     hasReachedConfirmation: false,
@@ -41,6 +42,9 @@ export const FormDataProvider = (props) => {
         };
       }
       case 'UPDATE_STEP': {
+        console.log([...state.previousSteps], 'previous step')
+        console.log(state.futureStep, 'future step')
+        console.log(action.payload.currentStep, 'current step')
         return {
           ...state,
           previousSteps: [...state.previousSteps, action.payload.currentStep], // Store previous step
@@ -55,12 +59,13 @@ export const FormDataProvider = (props) => {
           ...state,
           previousSteps,
           currentStep: previousStep || 0, // If there's no previous step, go back to the first step
+          // futureStep: newFurureStep
         };
       }
-      case 'REACHED_CONFIRMATION': {
+      case 'REACHED_ANSWER_CHECKS': {
         return {
           ...state,
-          hasReachedConfirmation: action.payload,
+          answerChecks: action.payload.answerChecks,
         };
       }
       default:

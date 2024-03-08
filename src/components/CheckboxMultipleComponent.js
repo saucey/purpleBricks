@@ -12,6 +12,7 @@ const CheckboxMultipleComponent = () => {
   const [pageData, setPageData] = useState([]);
   const [checkBoxData, setCheckBoxData] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [sectionErrors, setSectionErrors] = useState({});
 
   useEffect(() => {
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
@@ -44,9 +45,6 @@ const CheckboxMultipleComponent = () => {
 
   const handleCheckboxChange = (value, isChecked) => {
 
-    console.log(value, 'value!!!')
-    console.log(isChecked, 'value!!!')
-
     if (isChecked) {
       setSelectedOptions([...selectedOptions, value]); // Add the value to selectedOptions
     } else {
@@ -55,7 +53,19 @@ const CheckboxMultipleComponent = () => {
   };
 
   const redirect = () => {
-    console.log(selectedOptions, 'here multiple checkbox page')
+
+    const errors = {};
+    checkBoxData.forEach(page => {
+      if (!selectedOptions.some(option => page.options.map(opt => opt.label.value).includes(option))) {
+        errors[page.id] = true;
+      }
+    });
+    setSectionErrors(errors);
+
+    if (Object.values(errors).some(error => error)) {
+      return;
+    }
+
     const payload = {
       selectedOptions,
       "pageId": pageData.id
@@ -66,9 +76,16 @@ const CheckboxMultipleComponent = () => {
       payload
     });
 
+
+    let nextPage = pageData?.nextId
+
+    if (formDataState.answerChecks) {
+      nextPage = 22
+    }
+
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: pageData?.nextId, currentStep: currentStep }, // Increment the current step
+      payload: { nextStep: nextPage, currentStep: currentStep }, // Increment the current step
     });
   };
 
@@ -76,6 +93,7 @@ const CheckboxMultipleComponent = () => {
   return (
     <>
       <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
+        <h1>{currentStep}</h1>
         <div className="wmnds-progress-indicator">
           Section 1 of 2
           <h4>About the issue</h4>
@@ -92,16 +110,12 @@ const CheckboxMultipleComponent = () => {
                   value: option.label.value,
                   checked: selectedOptions.includes(option.label.value),
                 }))}
+                hasError={sectionErrors[page.id]}
+                errorMessage={sectionErrors[page.id] && 'Please select your options'}
               />
             )}
           </>
-        ))}
-            <ul>
-              {selectedOptions.map((option, index) => (
-                <li key={index}>{option}</li>
-              ))}
-            </ul>
-        
+        ))}        
         <ButtonCta label="Continue" onClick={redirect} /> {/* Render the button outside of the loop */}
       </div>
     </>

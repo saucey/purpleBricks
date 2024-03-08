@@ -45,6 +45,12 @@
       "id": 2,
       "nextId": 3,
       "info": "We are only responsible for bus stops and Park and Ride sites in the West Midlands. If you live outside this area <a href=\"#\">report the issue to your local council.</a>",
+      "validation":{
+        "rules": {
+          "town": { "required": true },
+          "street": { "required": true }
+        }     
+      },
       "options": [
         {
           "label": "Town or area * <br /> For example, Halesowen",
@@ -81,6 +87,12 @@
       "section": "2", 
       "id": 4,
       "nextId": 5,
+      "validation":{
+        "rules": {
+          "firstName": { "required": true },
+          "lastName": { "required": true }
+        }     
+      },
       "options": [
         {
           "label": "First name",
@@ -96,6 +108,13 @@
       "title": "What are your contact details?",
       "section": "2", 
       "id": 5,
+      "nextId": 22,
+      "validation":{
+        "rules": {
+          "email": { "required": true },
+          "phone": { "required": true }
+        }     
+      },
       "options": [
         {
           "label": "Email address \n For example, name@example.com",
@@ -620,6 +639,10 @@
           }
         }
       ]
+    },
+    {
+      "title": "Check you answers",
+      "id": 22
     }
   ]
 }

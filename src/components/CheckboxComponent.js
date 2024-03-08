@@ -50,9 +50,15 @@ const CheckboxComponent = () => {
       payload
     });
 
+    let nextPage = pageData?.nextId
+
+    if (formDataState.answerChecks && currentStep !== 8 && currentStep !== 14 && currentStep !== 18 ) {
+      nextPage = 22
+    }
+
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: pageData?.nextId, currentStep: currentStep, futureStep: selectedOptions },
+      payload: { nextStep: nextPage, currentStep: currentStep, futureStep: selectedOptions },
     });
   };
 
@@ -60,6 +66,7 @@ const CheckboxComponent = () => {
     <>
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
+          <h1>{currentStep}</h1>
           <div className="wmnds-progress-indicator">
             Section {pageData.section} of 2
             <h4>About the issue</h4>

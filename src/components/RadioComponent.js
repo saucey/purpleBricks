@@ -31,7 +31,6 @@ const RadioComponent = () => {
   }, [currentStep, formData, pageData]);
 
   const handleSelect = (value) => {
-    console.log(value)
     setSelectedOption(value);
   };
 
@@ -45,9 +44,15 @@ const RadioComponent = () => {
       "pageId": pageData.id
     }
 
+    let nextPage = selectedOption?.skip ? selectedOption?.nextId : pageData?.nextId;
+
+    if (formDataState.answerChecks) {
+      nextPage = 22
+    }
+
     formDataDispatch({
       type: 'UPDATE_STEP',
-      payload: { nextStep: selectedOption?.skip ? selectedOption?.nextId : pageData?.nextId, currentStep: currentStep, futureStep: selectedOption.nextId }, // Increment the current step
+      payload: { nextStep: nextPage, currentStep: currentStep, futureStep: selectedOption.nextId }, // Increment the current step
     });
 
     formDataDispatch({
@@ -65,6 +70,7 @@ const RadioComponent = () => {
       {/* <h1>next:{pageData?.nextId}</h1> */}
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
+          <h1>{currentStep}</h1>
           <h1 className="heading-2">{pageData.title}</h1>
           { pageData.options && (
             <Radios
