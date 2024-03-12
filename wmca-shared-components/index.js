@@ -314,8 +314,6 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
-// import PropTypes from 'prop-types';
-
 const TextInput = ({
   id,
   name,
@@ -324,6 +322,8 @@ const TextInput = ({
   isError,
   value,
   onChange,
+  type = 'text',
+  // Default type is set to text
   ...inputProps
 }) => {
   const defaultId = name;
@@ -341,7 +341,7 @@ const TextInput = ({
     className: inputClass,
     id: finalId,
     name: name,
-    type: "text",
+    type: type /* Use the dynamic type here */,
     value: value,
     onChange: onChange
   }, inputProps)));

@@ -1,9 +1,18 @@
 // TextInput.js
 import React from 'react';
-// import PropTypes from 'prop-types';
 
-const TextInput = ({ id, name, label, errorMessage, isError, value, onChange, ...inputProps }) => {
-  const defaultId = name
+const TextInput = ({
+  id,
+  name,
+  label,
+  errorMessage,
+  isError,
+  value,
+  onChange,
+  type = 'text', // Default type is set to text
+  ...inputProps
+}) => {
+  const defaultId = name;
   const finalId = id || defaultId;
   const groupClass = `wmnds-fe-group${isError ? ' wmnds-fe-group--error' : ''}`;
   const inputClass = `wmnds-fe-input${isError ? ' wmnds-fe-input--error' : ''}`;
@@ -18,7 +27,7 @@ const TextInput = ({ id, name, label, errorMessage, isError, value, onChange, ..
         className={inputClass}
         id={finalId}
         name={name}
-        type="text"
+        type={type} /* Use the dynamic type here */
         value={value}
         onChange={onChange}
         {...inputProps}
@@ -26,15 +35,5 @@ const TextInput = ({ id, name, label, errorMessage, isError, value, onChange, ..
     </div>
   );
 };
-
-// TextInput.propTypes = {
-//   id: PropTypes.string, // id is not marked as required as it can be generated
-//   name: PropTypes.string.isRequired,
-//   label: PropTypes.string.isRequired,
-//   errorMessage: PropTypes.string,
-//   isError: PropTypes.bool,
-//   value: PropTypes.string, // The value of the input
-//   onChange: PropTypes.func, // Callback function triggered on input change
-// };
 
 export { TextInput };
