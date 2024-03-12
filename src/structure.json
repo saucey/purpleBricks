@@ -118,7 +118,8 @@
       "options": [
         {
           "label": "Email address \n For example, name@example.com",
-          "name": "email"
+          "name": "email",
+          "type": "email"
         },
         {
           "label": "Phone number \n For exmple, 07700900457",

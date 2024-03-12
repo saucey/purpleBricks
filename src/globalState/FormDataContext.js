@@ -42,9 +42,6 @@ export const FormDataProvider = (props) => {
         };
       }
       case 'UPDATE_STEP': {
-        console.log([...state.previousSteps], 'previous step')
-        console.log(state.futureStep, 'future step')
-        console.log(action.payload.currentStep, 'current step')
         return {
           ...state,
           previousSteps: [...state.previousSteps, action.payload.currentStep], // Store previous step
