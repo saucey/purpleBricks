@@ -17,10 +17,6 @@ export const FormDataProvider = (props) => {
 
   // Reducer function
   const reducer = (state, action) => {
-    
-    // console.log(state.previousSteps, 'prev')
-    // console.log(state.currentStep, 'current')
-    // console.log(action.payload.futureStep, 'Further')
     switch (action.type) {
       case 'UPDATE_FORM_DATA': {
         let found = false;

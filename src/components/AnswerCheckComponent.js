@@ -2,18 +2,19 @@ import { useState, useContext, useEffect } from 'react';
 import '../App.css';
 import { FormDataContext } from '../globalState/FormDataContext';
 import reportFormData from '../structure.json';
-
 import { Checkboxes } from 'wmca-shared-components';
+import MapReview from '../shared/MapReview';
 
 const AnswerCheck = () => {
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
-  const { currentStep, futureStep, formData, previousSteps } = formDataState;
+  const { currentStep, formData, previousSteps } = formDataState;
   const [reporting, setReporting] = useState({}); 
 
 
   useEffect(() => {
     let newReporting = {};
-    const filteredData = formData
+    console.log(formData, 'final')
+    formData
       .filter(item => previousSteps.includes(item.pageId))
       .map(item => {
         const selectPage = reportFormData.pages.find(page => page.id === item.pageId);
@@ -44,13 +45,13 @@ const AnswerCheck = () => {
             break;
           case 13:
           case 3:
-            newReporting['info'] = { ...newReporting['info'], title: selectPage?.title, details: item.textareaValue, photo: '', pageId: item.pageId };
+            newReporting['info'] = { ...newReporting['info'], title: selectPage?.title, details: item.textareaValue, photos: item.photos, pageId: item.pageId };
             break;
           case 15:
             newReporting['where'] = { ...newReporting['where'], title: selectPage?.title, location: item.selectedValue, pageId: item.pageId };
             break;
           case 2:
-            newReporting['where'] = { ...newReporting['where'], title: selectPage?.title2, address: { town: item.inputValues.town, street: item.inputValues.street, direction: item.inputValues.direction, number: item.inputValues.number }, pageId: item.pageId };
+            newReporting['where'] = { ...newReporting['where'], title: selectPage?.title2, address: { town: item.inputValues.town, street: item.inputValues.street, direction: item.inputValues.direction, number: item.inputValues.number }, coords: item.coords, pageId: item.pageId };
             break;         
           case 5:
             newReporting['contact'] = { ...newReporting['contact'], email: item.inputValues.email || "", phone: item.inputValues.phone || "", pageId: item.pageId };
@@ -123,12 +124,21 @@ const AnswerCheck = () => {
               <th scope="row" data-header="Header 1">
                 {reporting.where?.title}
               </th>
-              <td data-header="Header 2">
-                {reporting.where?.location}<br />
-                {reporting.where?.address?.town}<br />
-                {reporting.where?.address?.street}<br />
-                {reporting.where?.address?.direction}<br />
-                {reporting.where?.address?.number}
+              <td data-header="Header 2" className={reporting.where?.coords && 'mapContainer'}>
+                {!reporting.where?.coords && (
+                  <>
+                    {reporting.where?.location}<br />
+                    {reporting.where?.address?.town}<br />
+                    {reporting.where?.address?.street}<br />
+                    {reporting.where?.address?.direction}<br />
+                    {reporting.where?.address?.number}
+                  </>
+                )}
+
+                {reporting.where?.coords && (
+                  <MapReview lat={reporting.where?.coords.latitude} long={reporting.where?.coords.longitude} />
+                )}
+                
               </td>
               <td className="wmnds-text-align-right">
                 <button type='button' className='wmnds-btn wmnds-btn--link' onClick={() => redirect(reporting.where.pageId)}>Change</button>
@@ -201,14 +211,18 @@ const AnswerCheck = () => {
               </td>
             </tr>
             <tr>
-              <th scope="row" data-header="Header 1">
+              <th scope="row" data-header="Header 1" style={{verticalAlign: 'unset'}}>
                 Photo of the issue
               </th>
               <td data-header="Header 2">
-                <img src="" />
+                {reporting.info?.photos.map((image, index) => (
+                  <div key={index} className="preview-image">
+                    <img className="wmnds-m-t-md wmnds-m-b-lg" src={image} alt={`Preview ${index + 1}`} />
+                  </div>
+                ))} 
               </td>
-              <td className="wmnds-text-align-right">
-                <button type='button' className='wmnds-btn wmnds-btn--link' onClick={() => redirect()}>Change</button>
+              <td className="wmnds-text-align-right" style={{ verticalAlign: 'unset' }}>
+                <button type='button' className='wmnds-btn wmnds-btn--link' onClick={() => redirect(reporting.info.pageId)}>Change</button>
               </td>
             </tr>
           </tbody>

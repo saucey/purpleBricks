@@ -1,18 +1,20 @@
-import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
 import '../App.css';
 import reportFormData from '../structure.json';
-import { ButtonCta, FormTextarea, FileUpload } from 'wmca-shared-components';
+import { ButtonCta, FormTextarea } from 'wmca-shared-components'; // Update import, removing FileUpload
 import { FormDataContext } from '../globalState/FormDataContext';
+import { FileUpload, ButtonDestructive } from 'wmca-shared-components'; // Import modified FileUpload component
 
 const UploadDetailsComponent = () => {
-  const navigate = useNavigate();
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
   const { currentStep, formData } = formDataState;
-  const [pageData, setPageData] = useState(null);  
+  const [pageData, setPageData] = useState(null);
   const [textareaValue, setTextareaValue] = useState('');
+  const [previewImages, setPreviewImages] = useState([]);
 
   useEffect(() => {
+
+    console.log(formData, 'form data')
     // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
@@ -21,17 +23,19 @@ const UploadDetailsComponent = () => {
       const matchingData = formData.find(data => data.pageId === currentStep);
       if (matchingData) {
         setTextareaValue(matchingData.textareaValue);
-      } 
+        setPreviewImages(matchingData.photos)
+      }
     } else {
       // If no formData or pageData, set inputValues to empty object
       setTextareaValue('');
+      setPreviewImages([]);
     }
   }, [currentStep, formData, pageData]);
 
   const redirect = () => {
-
     const payload = {
       textareaValue,
+      photos: previewImages,
       "pageId": pageData.id
     }
 
@@ -52,69 +56,98 @@ const UploadDetailsComponent = () => {
     });
   }
 
-
   // Function to handle textarea change
   const handleTextareaChange = (event) => {
     setTextareaValue(event.target.value);
   };
 
-  // State to manage selected file
-  const [selectedFile, setSelectedFile] = useState(null);
-  // State to manage error
+  // State to manage selected files
   const [error, setError] = useState(false);
 
   // Function to handle file upload
-  const handleFileUpload = (file) => {
-    if (file) {
-      setSelectedFile(file);
-      setError(false); // Reset error state
-    } else {
-      setError(true); // Set error state if file size exceeds limit
+  const handleFileUpload = (files) => {
+    files === null ? setError(true) : setError(false);
+    if (files && files.length > 0) {
+      const newImages = [];
+
+      // Recursive function to handle reading files sequentially
+      const readNextFile = (index) => {
+        if (index >= files.length) {
+          // All files have been processed
+          setPreviewImages([...previewImages, ...newImages]); // Update preview images array
+          return;
+        }
+
+        const file = files[index];
+        const reader = new FileReader();
+
+        // Event listener for when file reading is complete
+        reader.onload = (e) => {
+          newImages.push(e.target.result);
+          readNextFile(index + 1); // Read the next file
+        };
+
+        // Event listener for when an error occurs during file reading
+        reader.onerror = (e) => {
+          setError(true); // Set error state if an error occurs
+          readNextFile(index + 1); // Move to the next file even if an error occurs
+        };
+
+        // Start reading the file as data URL
+        reader.readAsDataURL(file);
+      };
+
+      // Start reading the first file
+      readNextFile(0);
     }
   };
 
   // Function to handle file removal
-  const handleFileRemove = () => {
-    setSelectedFile(null); // Reset selected file
-    setError(false); // Reset error state
+  const handleFileRemove = (index) => {
+    const newImages = [...previewImages];
+    newImages.splice(index, 1); // Remove the selected image from the array
+    setPreviewImages(newImages); // Update the preview images array
   };
 
   return (
     <>
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
-          <h1>{currentStep}</h1>
-
           <div className="wmnds-progress-indicator">
-              Section {pageData.section} of 2
+            Section {pageData.section} of 2
             <h4>About the issue</h4>
           </div>
-          <h1 className="heading-2">
-            {pageData.title}
-          </h1>
-       
+          <h1 className="heading-2">{pageData.title}</h1>
           <FormTextarea
-            id="issue-details" // Required: provide a unique ID for the textarea
-            name="issue-details" // Required: provide a name for the textarea
-            label="Details of the issue" // Required: provide a label for the textarea
-            errorMessage="Please enter a valid value" // Optional: error message to display when isError is true
-            isError={false} // Optional: set to true if there's an error with the textarea
-            value={textareaValue} // Required: value of the textarea field
-            onChange={handleTextareaChange} // Required: callback function triggered on textarea change
-            placeholder="Enter your text" // Optional: placeholder text for the textarea field
+            id="issue-details"
+            name="issue-details"
+            label="Details of the issue"
+            errorMessage="Please enter a valid value"
+            isError={false}
+            value={textareaValue}
+            onChange={handleTextareaChange}
+            placeholder="Enter your text"
           />
-
-          <h4>Photo of the issue</h4>
-          <p>File must be jpeg or png file format</p>
-
+          <h4>Photos of the issue</h4>
+          <p>Files must be jpeg or png file format</p>
+          <div className="preview-images">
+            {previewImages.map((image, index) => (
+              <div key={index} className="preview-image">
+                <ButtonDestructive hasIcon icon={"general-trash"} label="Remove file" onClick={() => handleFileRemove(index)} />
+                <div>
+                  <img className="wmnds-m-t-md wmnds-m-b-lg" src={image} alt={`Preview ${index + 1}`} />
+                </div>
+              </div>
+            ))}
+          </div>
           <FileUpload
-            onFileUpload={handleFileUpload} // Required: callback function triggered on file upload
-            onFileRemove={handleFileRemove} // Required: callback function triggered on file removal
-            selectedFile={selectedFile} // Required: selected file
-            error={error} // Required: boolean indicating error state
-            inmeg={2} // Optional: file size limit in megabytes
+            onFileUpload={handleFileUpload}
+            onFileRemove={handleFileRemove}
+            multiple={true} // Allow multiple file uploads
+            error={error}
+            inmeg={2}
           />
-          <ButtonCta label="Continue" onClick={() => redirect()} />
+          <ButtonCta label="Continue" onClick={redirect} />
         </div>
       )}
     </>

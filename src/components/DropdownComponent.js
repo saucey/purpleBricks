@@ -1,12 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import reportFormData from '../structure.json';
 import { FormDataContext } from '../globalState/FormDataContext';
-
-import { Radios, ButtonCta, TextInput, Checkboxes, Dropdown } from 'wmca-shared-components';
+import { ButtonCta, Dropdown } from 'wmca-shared-components';
 
 const DropdownComponent = () => {
-  const navigate = useNavigate();
   
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
   const { currentStep, formData } = formDataState;
@@ -81,7 +78,6 @@ const DropdownComponent = () => {
     <>
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
-          <h1>{currentStep}</h1>
           <div className="wmnds-progress-indicator">
             Section {pageData.section} of 2
             <h4>About the issue</h4>

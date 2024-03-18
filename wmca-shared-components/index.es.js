@@ -7,9 +7,11 @@ const ButtonCta = ({
   hasIcon,
   isLoading,
   isDarkBg,
-  onClick
+  onClick,
+  className
 }) => {
   const buttonClasses = ['wmnds-btn'];
+  if (className) buttonClasses.push(className);
   if (isActive) buttonClasses.push('wmnds-is--active');
   if (isDisabled) buttonClasses.push('wmnds-btn--disabled');
   if (isDarkBg) buttonClasses.push('wmnds-btn--dark-bg');
@@ -37,7 +39,9 @@ const ButtonDestructive = ({
   label,
   isActive,
   isDisabled,
-  hasIcon
+  hasIcon,
+  onClick,
+  icon = "general-chevron-right"
 }) => {
   // Define the base class
   let buttonClass = 'wmnds-btn wmnds-btn--destructive';
@@ -52,13 +56,14 @@ const ButtonDestructive = ({
   return /*#__PURE__*/React.createElement("button", {
     className: buttonClass,
     disabled: isDisabled,
-    type: "button"
+    type: "button",
+    onClick: onClick
   }, label, hasIcon && /*#__PURE__*/React.createElement("svg", {
     className: "wmnds-btn__icon wmnds-btn__icon--right",
     "data-testid": "svg-component"
   }, /*#__PURE__*/React.createElement("use", {
-    xlinkHref: "#wmnds-general-chevron-right",
-    href: "#wmnds-general-chevron-right"
+    xlinkHref: `#wmnds-${icon}`,
+    href: `#wmnds-${icon}`
   })));
 };
 
@@ -175,14 +180,15 @@ const ButtonPrimary = ({
   })));
 };
 
-const SecondaryButton = ({
+const ButtonSecondary = ({
   label,
   isActive,
   isDisabled,
   hasIcon,
   isDarkBg,
   icon,
-  className
+  className,
+  onClick
 }) => {
   const buttonClasses = ['wmnds-btn', 'wmnds-btn--secondary'];
   if (className) buttonClasses.push(className);
@@ -192,7 +198,8 @@ const SecondaryButton = ({
   return /*#__PURE__*/React.createElement("button", {
     className: buttonClasses.join(' '),
     type: "button",
-    disabled: isDisabled
+    disabled: isDisabled,
+    onClick: onClick
   }, label, hasIcon && /*#__PURE__*/React.createElement("svg", {
     className: "wmnds-btn__icon wmnds-btn__icon--right",
     "data-testid": "svg-component"
@@ -372,52 +379,51 @@ const FormTextarea = ({
 const FileUpload = ({
   onFileUpload,
   onFileRemove,
-  selectedFile,
   error,
-  inmeg
+  inmeg,
+  multiple = false
 }) => {
   const handleFileChange = event => {
-    const file = event.target.files[0];
+    const files = event.target.files;
 
     // Check file size (example: 2MB limit)
-    const fileSizeLimit = inmeg * 1024 * 1024; // 2MB
-    if (file && file.size > fileSizeLimit) {
-      if (onFileUpload) {
-        onFileUpload(null); // Notify the parent component that the file upload failed
+    const fileSizeLimit = inmeg * 1024 * 1024; // Convert to bytes
+    const filesToUpload = [];
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].size > fileSizeLimit) {
+        if (onFileUpload) {
+          onFileUpload(null); // Notify the parent component that the file upload failed
+        }
+        return;
       }
-      return;
+      filesToUpload.push(files[i]);
     }
     if (onFileUpload) {
-      onFileUpload(file);
-    }
-  };
-  const handleRemoveFile = () => {
-    if (onFileRemove) {
-      onFileRemove();
+      onFileUpload(filesToUpload);
     }
   };
   return /*#__PURE__*/React.createElement("div", {
     className: `wmnds-fe-group ${error ? 'wmnds-fe-group--error' : ''}`
   }, error && /*#__PURE__*/React.createElement("span", {
     className: "wmnds-fe-error-message"
-  }, "File must be less than 2mb"), /*#__PURE__*/React.createElement("div", {
+  }, "File must be less than ", inmeg, "mb"), /*#__PURE__*/React.createElement("div", {
     className: "wmnds-fe-file-upload"
   }, /*#__PURE__*/React.createElement("input", {
     type: "file",
     name: "fileUploader",
     id: "fileUploader",
-    className: `wmnds-fe-file-upload__input ${selectedFile ? 'wmnds-fe-file-upload__input--file-selected' : ''}`,
-    onChange: handleFileChange
+    className: "wmnds-fe-file-upload__input",
+    onChange: handleFileChange,
+    multiple: multiple // Set multiple attribute based on props
   }), /*#__PURE__*/React.createElement("label", {
     htmlFor: "fileUploader",
-    className: "wmnds-btn wmnds-btn--primary wmnds-fe-file-upload__label",
-    onClick: handleRemoveFile
-  }, selectedFile ? 'Remove file' : 'Choose file', /*#__PURE__*/React.createElement("svg", {
+    className: "wmnds-btn wmnds-btn--primary wmnds-fe-file-upload__label"
+  }, "Choose file", /*#__PURE__*/React.createElement("svg", {
     className: "wmnds-btn__icon wmnds-btn__icon--right"
   }, /*#__PURE__*/React.createElement("use", {
-    xlinkHref: `#${selectedFile ? 'wmnds-general-trash' : 'wmnds-general-paperclip'}`,
-    href: `#${selectedFile ? 'wmnds-general-trash' : 'wmnds-general-paperclip'}`
-  }))), /*#__PURE__*/React.createElement("span", null, selectedFile ? selectedFile.name : 'no file selected')));
+    xlinkHref: "#wmnds-general-paperclip",
+    href: "#wmnds-general-paperclip"
+  }))), /*#__PURE__*/React.createElement("span", null)));
 };
 
 const Checkboxes = ({
@@ -502,4 +508,4 @@ const Dropdown = ({
   }, option.label)))));
 };
 
-export { ButtonCta, ButtonDestructive, ButtonFavorite, ButtonLink, ButtonOpenClose, ButtonPayment, ButtonPrimary, ButtonStart, Checkboxes, Dropdown, FileUpload, FormTextarea, ModeButton, Radios, SecondaryButton, TextInput };
+export { ButtonCta, ButtonDestructive, ButtonFavorite, ButtonLink, ButtonOpenClose, ButtonPayment, ButtonPrimary, ButtonSecondary, ButtonStart, Checkboxes, Dropdown, FileUpload, FormTextarea, ModeButton, Radios, TextInput };

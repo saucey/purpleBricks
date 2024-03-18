@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const FileUpload = ({ onFileUpload, onFileRemove, selectedFile, error, inmeg }) => {
+const FileUpload = ({ onFileUpload, onFileRemove, error, inmeg, multiple = false }) => {
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
+    const files = event.target.files;
 
     // Check file size (example: 2MB limit)
-    const fileSizeLimit = inmeg * 1024 * 1024; // 2MB
-    if (file && file.size > fileSizeLimit) {
-      if (onFileUpload) {
-        onFileUpload(null); // Notify the parent component that the file upload failed
+    const fileSizeLimit = inmeg * 1024 * 1024; // Convert to bytes
+    const filesToUpload = [];
+
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].size > fileSizeLimit) {
+        if (onFileUpload) {
+          onFileUpload(null); // Notify the parent component that the file upload failed
+        }
+        return;
       }
-      return;
+      filesToUpload.push(files[i]);
     }
 
     if (onFileUpload) {
-      onFileUpload(file);
+      onFileUpload(filesToUpload);
     }
   };
 
@@ -26,30 +31,29 @@ const FileUpload = ({ onFileUpload, onFileRemove, selectedFile, error, inmeg }) 
 
   return (
     <div className={`wmnds-fe-group ${error ? 'wmnds-fe-group--error' : ''}`}>
-      {error && <span className="wmnds-fe-error-message">File must be less than 2mb</span>}
+      {error && <span className="wmnds-fe-error-message">File must be less than {inmeg}mb</span>}
       <div className="wmnds-fe-file-upload">
         <input
           type="file"
           name="fileUploader"
           id="fileUploader"
-          className={`wmnds-fe-file-upload__input ${selectedFile ? 'wmnds-fe-file-upload__input--file-selected' : ''}`}
+          className="wmnds-fe-file-upload__input"
           onChange={handleFileChange}
+          multiple={multiple} // Set multiple attribute based on props
         />
         <label
           htmlFor="fileUploader"
           className="wmnds-btn wmnds-btn--primary wmnds-fe-file-upload__label"
-          onClick={handleRemoveFile}
         >
-          {selectedFile ? 'Remove file' : 'Choose file'}
-          {/* trash icon or paper click icon based on selectedFile state */}
+          Choose file
           <svg className="wmnds-btn__icon wmnds-btn__icon--right">
-            <use xlinkHref={`#${selectedFile ? 'wmnds-general-trash' : 'wmnds-general-paperclip'}`} href={`#${selectedFile ? 'wmnds-general-trash' : 'wmnds-general-paperclip'}`}></use>
+            <use xlinkHref="#wmnds-general-paperclip" href="#wmnds-general-paperclip"></use>
           </svg>
         </label>
-        <span>{selectedFile ? selectedFile.name : 'no file selected'}</span>
+        <span>{/* No need to show selected files count */}</span>
       </div>
     </div>
   );
 };
 
-export {FileUpload};
+export { FileUpload };

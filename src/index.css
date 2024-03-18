@@ -1,3 +1,5 @@
+@import "https://js.arcgis.com/4.29/@arcgis/core/assets/esri/themes/light/main.css";
+
 html {
   background: #f3f2f1;
 }
@@ -14,4 +16,93 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.zoom-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+.zoom-button {
+  cursor: pointer;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.zoom-button:hover {
+  background-color: #f0f0f0;
+}
+
+.esri-ui {
+  overflow: unset;
+}
+
+.esri-search {
+  position: absolute;
+  top: -82px;
+  left: 0px;
+  border: 1px solid #3c1053;
+  width: 100%;
+  height: 51px;
+}
+
+.esri-widget--button, .esri-widget--button:active, .esri-widget--button:hover  {
+  background: #3c1053;
+  height: 50px;
+  width: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 26px;
+  /* visibility: hidden; */
+}
+
+.esri-search__container .esri-search__input:focus, .esri-search__container .esri-widget--button:focus {
+  -webkit-box-shadow: unset;
+  box-shadow: unset;
+}
+
+.wmnds-search-bar__btn {
+  cursor: pointer;
+}
+
+.search-space {
+  height: 50px;
+}
+
+.esri-input[type=text], .esri-input[type=password], .esri-input[type=number] {
+  height: 48px;
+}
+
+.esri-icon-close:before {
+    content: "";
+    color: inherit;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.wmnds-btn.btn-map-view {
+  position: relative;
+  left: 127px;
+  bottom: 50px;
+}
+
+td.mapContainer {
+  height: 250px!important;
+}
+
+.map-wrapper {
+  overflow: hidden; 
+  width: 270px;
+  height: 185px;
+  margin-left: 10px;
+}
+
+.esri-icon-search {
+  font-size: 2rem;
+  font-weight: bold;
 }

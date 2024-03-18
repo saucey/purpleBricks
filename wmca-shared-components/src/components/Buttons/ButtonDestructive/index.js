@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ButtonDestructive = ({ label, isActive, isDisabled, hasIcon }) => {
+export const ButtonDestructive = ({ label, isActive, isDisabled, hasIcon, onClick, icon = "general-chevron-right" }) => {
   // Define the base class
   let buttonClass = 'wmnds-btn wmnds-btn--destructive';
 
@@ -14,11 +14,11 @@ export const ButtonDestructive = ({ label, isActive, isDisabled, hasIcon }) => {
   }
 
   return (
-    <button className={buttonClass} disabled={isDisabled} type="button">
+    <button className={buttonClass} disabled={isDisabled} type="button" onClick={onClick}>
       {label}
       {hasIcon && (
         <svg className="wmnds-btn__icon wmnds-btn__icon--right" data-testid="svg-component">
-          <use xlinkHref="#wmnds-general-chevron-right" href="#wmnds-general-chevron-right"></use>
+          <use xlinkHref={`#wmnds-${icon}`} href={`#wmnds-${icon}`}></use>
         </svg>
       )}
     </button>

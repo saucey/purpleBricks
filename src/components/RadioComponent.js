@@ -1,10 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FormDataContext } from '../globalState/FormDataContext';
 import { Radios, ButtonCta } from 'wmca-shared-components';
 import reportFormData from '../structure.json';
-
-import { transformString } from '../utils/index'
 
 const RadioComponent = () => {
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
@@ -13,7 +10,6 @@ const RadioComponent = () => {
   // const [pageDataState, setPageDataState] = useState(null);
   const [error, setError] = useState(false);
   const [selectedOption, setSelectedOption] = useState(undefined); // Initial selected option
-  const navigate = useNavigate();
 
   useEffect(() => {
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
@@ -66,11 +62,8 @@ const RadioComponent = () => {
 
   return (
     <>
-      {/* <h1>current:{currentStep}</h1> */}
-      {/* <h1>next:{pageData?.nextId}</h1> */}
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
-          <h1>{currentStep}</h1>
           <h1 className="heading-2">{pageData.title}</h1>
           { pageData.options && (
             <Radios

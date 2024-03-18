@@ -1,9 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import reportFormData from '../structure.json';
 import { FormDataContext } from '../globalState/FormDataContext';
 
-import { Radios, ButtonCta, TextInput, Checkboxes } from 'wmca-shared-components';
+import { ButtonCta, Checkboxes } from 'wmca-shared-components';
 
 const CheckboxMultipleComponent = () => {
   // const navigate = useNavigate();
@@ -93,7 +92,6 @@ const CheckboxMultipleComponent = () => {
   return (
     <>
       <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
-        <h1>{currentStep}</h1>
         <div className="wmnds-progress-indicator">
           Section 1 of 2
           <h4>About the issue</h4>

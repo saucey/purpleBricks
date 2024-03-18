@@ -7,9 +7,11 @@ export const ButtonCta = ({
   hasIcon,
   isLoading,
   isDarkBg,
-  onClick
+  onClick,
+  className
 }) => {
   const buttonClasses = ['wmnds-btn'];
+  if (className) buttonClasses.push(className);
   if (isActive) buttonClasses.push('wmnds-is--active');
   if (isDisabled) buttonClasses.push('wmnds-btn--disabled');
   if (isDarkBg) buttonClasses.push('wmnds-btn--dark-bg');
