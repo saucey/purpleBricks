@@ -98,7 +98,7 @@ const MapSearch = ({ redirect, coords = null }) => {
     if (coords && coords.longitude) {
       addMarker(coords);
     }
-  }, []);
+  }, [coords]);
   
   useEffect(() => {
 
