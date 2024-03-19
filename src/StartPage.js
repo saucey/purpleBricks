@@ -27,13 +27,13 @@ const StartPage = () => {
             <li>a park and ride site</li>
             <li>an electronic display or printed information</li>
           </ul>
-          <p>You can also <a href="#" className="wmnds-link">report anti-social behaviour online</a></p>
+          <p>You can also <a href="https://www.tfwm.org.uk/get-help/report-anti-social-behaviour-on-public-transport/" target="_blank" className="wmnds-link" rel="noreferrer">report anti-social behaviour online</a></p>
           <p>This process takes around 5 minutes</p>
           <div className="wmnds-warning-text ">
             <svg className="wmnds-warning-text__icon">
               <use xlinkHref="#wmnds-general-warning-circle" href="#wmnds-general-warning-circle"></use>
             </svg>
-            We manage bus stops, information and park and ride sites in the West Midlands county. If you live outside this area <a href='#' target='_blank'>report issue to your council</a>
+            We manage bus stops, information and park and ride sites in the West Midlands county. If you live outside this area <a href='https://www.gov.uk/find-local-council' target='_blank' rel="noreferrer">report issue to your council</a>
           </div>
           <h2>Before you start</h2>
           <ul>

@@ -44,7 +44,7 @@
       "section": "1", 
       "id": 2,
       "nextId": 3,
-      "info": "We are only responsible for bus stops and Park and Ride sites in the West Midlands. If you live outside this area <a href=\"#\">report the issue to your local council.</a>",
+      "info": "We are only responsible for bus stops and Park and Ride sites in the West Midlands. If you live outside this area <a target=\"_blank\" href=\"https://www.gov.uk/find-local-council\">report the issue to your local council.</a>",
       "validation":{
         "rules": {
           "town": { "required": true },

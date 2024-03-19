@@ -39,7 +39,7 @@ const CheckboxMultipleComponent = () => {
     };
     // Call the function to find the matching object
     findMatchingPages();
-  }, []);
+  }, [formDataState.futureStep]);
 
 
   const handleCheckboxChange = (value, isChecked) => {

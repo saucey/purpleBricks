@@ -69,11 +69,11 @@ const AnswerCheck = () => {
   }, [currentStep, formData, previousSteps]);
   
   const terms = () => {
-    return (<p>Agree to the <a href="#">terms and conditions</a></p>);
+    return (<p>Agree to the <a href="https://www.tfwm.org.uk/terms-and-conditions/" target="_blank" rel="noreferrer">terms and conditions</a></p>);
   }
 
   const policy = () => {
-    return (<p>Agree to the <a href="#">privacy policy</a></p>);
+    return (<p>Agree to the <a href="https://www.tfwm.org.uk/policies/" target="_blank" rel="noreferrer">privacy policy</a></p>);
   }
 
   const options = [
