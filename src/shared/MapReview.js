@@ -16,6 +16,7 @@ const MapReview = ({ lat, long }) => {
       layers: [graphicsLayer],
     });
 
+    // eslint-disable-next-line no-unused-vars
     const view = new MapView({
       container: mapRef.current,
       map: map,
@@ -47,7 +48,7 @@ const MapReview = ({ lat, long }) => {
   }, [lat, long]);
 
   return (
-    <div class="map-wrapper">
+    <div className="map-wrapper">
       <div ref={mapRef} style={{ width: '100%', height: '100%', position: 'relative' }} />
     </div>
   );

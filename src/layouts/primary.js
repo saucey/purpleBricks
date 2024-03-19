@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import { FormDataContext } from '../globalState/FormDataContext';
 
 const AppLayoutPrimary = ({ children }) => {
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
   const { previousStep, currentStep } = formDataState;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const goBack = (e) => {
     e.preventDefault(); // Corrected typo
@@ -23,9 +23,9 @@ const AppLayoutPrimary = ({ children }) => {
   return (
     <main className="wmnds-container wmnds-container--main">
       {previousStep !== null && currentStep !== 1 &&( // Conditionally render the back button
-        <a href="#" title="link title" target="_self" className="wmnds-link" onClick={e => goBack(e)}>
+      <button className="wmnds-btn wmnds-btn--link" type="button" onClick={e => goBack(e)}>
           <span>&lt; Back</span>
-        </a>
+        </button>
       )}
       <div className="wmnds-grid wmnds-m-t-lg">
         <div className="main wmnds-col-1 wmnds-col-md-2-3 wmnds-m-b-xl wmnds-p-r-lg wmnds-p-r-sm-none">

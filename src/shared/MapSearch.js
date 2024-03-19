@@ -99,7 +99,7 @@ const MapSearch = ({ redirect, coords = null }) => {
     if (coords && coords.longitude) {
       addMarker(coords);
     }
-  }, []);
+  }, [coords]);
   
   useEffect(() => {
 
@@ -259,7 +259,7 @@ const MapSearch = ({ redirect, coords = null }) => {
         <li>Find a place by searching for a place or postcode, or using your location.</li>
         <li>Click on the <strong>Add point</strong> button. Click on the map where you want the point to appear. You can edit the point by clicking on it and dragging. </li>
       </ul>
-      <label class="wmnds-fe-label" for="selectedState">Place or postcode</label>
+      <label className="wmnds-fe-label" for="selectedState">Place or postcode</label>
 
       <div id="searchBar_form" className="wmnds-search-bar wmnds-m-b-lg">
         <input id="searchBar_input" aria-label="Search" type="text" className="wmnds-search-bar__input wmnds-fe-input" placeholder="Search for tickets, timetables, travel advice…" />
