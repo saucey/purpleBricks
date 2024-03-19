@@ -6,6 +6,7 @@ import { ButtonSecondary, ButtonCta } from 'wmca-shared-components';
 import { plusIcon, minusIcon, liveLocationIcon } from '../utils/index'
 import Search from '@arcgis/core/widgets/Search'; // Import Search widget directly
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
 import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
 
@@ -132,6 +133,26 @@ const MapSearch = ({ redirect, coords = null }) => {
     const searchWidget = new Search({
       view: viewRef.current,
       container: 'searchDiv',
+      viewModel: {
+        source: [
+          // {
+          //   featureLayer: new FeatureLayer({
+          //     url: "https://services.arcgis.com/DO4gTjwJVIJ7O9Ca/arcgis/rest/services/GeoForm_Survey_v11_live/FeatureServer/0",
+          //     outFields: ["*"]
+          //   }),
+            // searchFields: ["Email", "URL"],
+            // displayField: "Email",
+            // exactMatch: false,
+            // outFields: ["*"],
+            // name: "Point FS",
+            // placeholder: "example: esri",
+            // maxResults: 6,
+            // maxSuggestions: 6,
+            // suggestionsEnabled: true,
+            // minSuggestCharacters: 0
+          // },
+        ]
+      }
     });
 
 
