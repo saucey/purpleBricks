@@ -14,8 +14,10 @@ const MapSearch = ({ redirect, coords = null }) => {
   const mapRef = useRef();
   const viewRef = useRef(null);
   const markerRef = useRef(null);
-  const [addPointMode, setAddPointMode] = useState(false);
+  const addPointMode = useRef(false);
+  // const [addPointMode, setAddPointMode] = useState(false);
   const [address, setAddress] = useState(null);
+  const [buttonText, setButtonText] = useState('Add point');
   const [getCoords, setCoords] = useState(coords);
   const graphicsLayerRef = useRef(new GraphicsLayer());
 
@@ -61,13 +63,15 @@ const MapSearch = ({ redirect, coords = null }) => {
   };;
 
   const toggleAddPointMode = () => {
-    if (addPointMode) {
+    if (addPointMode.current) {
       // Clear marker and graphics layer when toggling off
       // setMarker(null);
       setCoords(null)
       graphicsLayerRef.current.removeAll();
     }
-    setAddPointMode(!addPointMode);
+    const value = addPointMode.current;
+    addPointMode.current = !value
+    setButtonText(!addPointMode.current ? 'Add Point' : 'Remove Point')
   };
 
 
@@ -117,11 +121,9 @@ const MapSearch = ({ redirect, coords = null }) => {
         components: []
       }
     });
-
     view.on("click", (event) => {
-      if (addPointMode) {
+      if (addPointMode.current) {
         const clickedPoint = event.mapPoint;
-        console.log(addPointMode)
         setCoords(clickedPoint)
         addMarker(clickedPoint);
       }
@@ -133,6 +135,9 @@ const MapSearch = ({ redirect, coords = null }) => {
     const searchWidget = new Search({
       view: viewRef.current,
       container: 'searchDiv',
+      PopupViewModel: {
+        autoOpenEnabled: true,
+      },
       viewModel: {
         source: [
           // {
@@ -206,7 +211,7 @@ const MapSearch = ({ redirect, coords = null }) => {
         searchWidget.destroy();
       }
     };
-  }, [coords, addPointMode]);
+  }, [coords]);
 
   useEffect(() => {
 
@@ -287,7 +292,7 @@ const MapSearch = ({ redirect, coords = null }) => {
       </div>
       <div id="searchDiv" value={address}></div>
 
-      <ButtonSecondary className={'wmnds-m-r-md'} label={addPointMode ? 'Remove pointer' : 'Add pointer'} onClick={toggleAddPointMode} />
+      <ButtonSecondary className={'wmnds-m-r-md'} label={buttonText} onClick={toggleAddPointMode} />
       <ButtonCta label="Continue" onClick={(e) => redirect(e, getCoords)} />
 
     </div>

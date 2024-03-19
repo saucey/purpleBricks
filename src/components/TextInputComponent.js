@@ -131,7 +131,7 @@ const TextInputComponent = () => {
               </svg>
               <span dangerouslySetInnerHTML={{ __html: pageData.info }} />
             </div>
-            <ButtonSecondary label={ !btnView ? 'Map view': 'List view' } hasIcon icon="general-list" onClick={toggleView}/>
+            <ButtonSecondary label={!btnView ? 'List view': 'Map view' } hasIcon icon="general-list" onClick={toggleView}/>
           </>
         )}
 
