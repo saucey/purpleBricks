@@ -122,8 +122,8 @@ const MapSearch = ({ redirect, coords = null }) => {
       }
     });
     view.on("click", (event) => {
+      const clickedPoint = event.mapPoint;
       if (addPointMode.current) {
-        const clickedPoint = event.mapPoint;
         setCoords(clickedPoint)
         addMarker(clickedPoint);
       }
@@ -135,32 +135,10 @@ const MapSearch = ({ redirect, coords = null }) => {
     const searchWidget = new Search({
       view: viewRef.current,
       container: 'searchDiv',
-      PopupViewModel: {
-        autoOpenEnabled: true,
-      },
       viewModel: {
-        source: [
-          // {
-          //   featureLayer: new FeatureLayer({
-          //     url: "https://services.arcgis.com/DO4gTjwJVIJ7O9Ca/arcgis/rest/services/GeoForm_Survey_v11_live/FeatureServer/0",
-          //     outFields: ["*"]
-          //   }),
-            // searchFields: ["Email", "URL"],
-            // displayField: "Email",
-            // exactMatch: false,
-            // outFields: ["*"],
-            // name: "Point FS",
-            // placeholder: "example: esri",
-            // maxResults: 6,
-            // maxSuggestions: 6,
-            // suggestionsEnabled: true,
-            // minSuggestCharacters: 0
-          // },
-        ]
+        source: []
       }
     });
-
-
 
     // Event listeners for search widget
     searchWidget.on("search-clear", (event) => {
@@ -176,6 +154,7 @@ const MapSearch = ({ redirect, coords = null }) => {
     });
 
     searchWidget.on('select-result', (event) => {
+
       const selectedLocation = event.result.feature.geometry;
       viewRef.current.goTo({
         center: [selectedLocation.longitude, selectedLocation.latitude],
@@ -195,6 +174,13 @@ const MapSearch = ({ redirect, coords = null }) => {
       if (submitButton) {
         submitButton.style.display = 'none';
       }
+
+      // viewRef.current.popup.open({
+      //   location: selectedLocation,
+      //   title: 'Selected Location',
+      //   content: `<p>${event.result.name}</p>`
+      // });
+
     });
 
     // Add the search widget to the UI
