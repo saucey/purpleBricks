@@ -13,7 +13,7 @@ const TextInputComponent = () => {
   const [inputValues, setInputValues] = useState({});
   const [getCoords, setCoords] = useState(null);
   const [errors, setErrors] = useState({});
-  const [btnViewText, setBtnViewText] = useState("Map view");
+  // const [btnViewText, setBtnViewText] = useState("Map view");
   const [btnView, setBtnView] = useState(true);
   const errorMessageRef = useRef(null);
 
