@@ -83,7 +83,7 @@ const UploadDetailsComponent = () => {
 
         // Event listener for when file reading is complete
         reader.onload = (e) => {
-          newImages.push(e.target.result);
+          newImages.push({ content: e.target.result, name: file.name }); // Push base64 string and file name into array
           readNextFile(index + 1); // Read the next file
         };
 
@@ -134,8 +134,9 @@ const UploadDetailsComponent = () => {
             {previewImages.map((image, index) => (
               <div key={index} className="preview-image">
                 <ButtonDestructive hasIcon icon={"general-trash"} label="Remove file" onClick={() => handleFileRemove(index)} />
+                <span className="wmnds-m-l-md">{image.name}</span>
                 <div>
-                  <img className="wmnds-m-t-md wmnds-m-b-lg" src={image} alt={`Preview ${index + 1}`} />
+                  <img className="wmnds-m-t-md wmnds-m-b-lg" src={image.content} alt={`Preview ${index + 1}`} />
                 </div>
               </div>
             ))}
