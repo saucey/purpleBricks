@@ -1,19 +1,20 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import '../App.css';
 import { FormDataContext } from '../globalState/FormDataContext';
 import reportFormData from '../structure.json';
-import { Checkboxes } from 'wmca-shared-components';
+import { Checkboxes, ButtonStart } from 'wmca-shared-components';
 import MapReview from '../shared/MapReview';
 
 const AnswerCheck = () => {
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
   const { currentStep, formData, previousSteps } = formDataState;
   const [reporting, setReporting] = useState({}); 
+  const [error, setError] = useState(null); 
+  const errorMessageRef = useRef(null);
 
 
   useEffect(() => {
     let newReporting = {};
-    console.log(formData, 'final')
     formData
       .filter(item => previousSteps.includes(item.pageId))
       .map(item => {
@@ -32,16 +33,14 @@ const AnswerCheck = () => {
             newReporting['issue3'] = { ...newReporting['issue3'], matchingIssues };
             break;
           case 12:
-            if (newReporting['issue3'] && newReporting['issue3'].matchingIssues) {
+            if (newReporting['issue3'] && newReporting['issue3']?.matchingIssues) {
               const filteredArray = newReporting['issue3'].matchingIssues.map(section => ({
                 ...section,
                 options: item.selectedOptions.length === 0 ? [] : section.options.filter(option => item.selectedOptions.includes(option.label.name))
               }));
               const finalFilteredArray = item.selectedOptions.length === 0 ? filteredArray : filteredArray.filter(section => section.options.length > 0);
               newReporting['issue3'] = { ...newReporting['issue3'], matchingIssues: finalFilteredArray, pageId: item.pageId };
-            } else {
-              console.error("newReporting['issue3'] or newReporting['issue3'].matchingIssues is undefined or null");
-            }
+            } 
             break;
           case 13:
           case 3:
@@ -76,22 +75,20 @@ const AnswerCheck = () => {
     return (<p>Agree to the <a href="https://www.tfwm.org.uk/policies/" target="_blank" rel="noreferrer">privacy policy</a></p>);
   }
 
-  const options = [
-    { label: policy(), value: 'option1', checked: true },
-    { label: terms(), value: 'option2', checked: true }, // Using the terms component as label
-  ];
-
   // State to manage the selected checkboxes
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [checkbox1Checked, setCheckbox1Checked] = useState(false);
+  const [checkbox2Checked, setCheckbox2Checked] = useState(false);
 
   // Handler function to update selected checkboxes
   const handleCheckboxChange = (value, isChecked) => {
-    if (isChecked) {
-      setSelectedOptions([...selectedOptions, value]);
-    } else {
-      setSelectedOptions(selectedOptions.filter(option => option !== value));
+    if (value === 'option1') {
+      setCheckbox1Checked(isChecked);
+    } else if (value === 'option2') {
+      setCheckbox2Checked(isChecked);
     }
   };
+
+  const isSubmitDisabled = !(checkbox1Checked && checkbox2Checked);
 
   const redirect = (pageId) => {
 
@@ -104,9 +101,135 @@ const AnswerCheck = () => {
       type: 'REACHED_ANSWER_CHECKS',
       payload: { answerChecks: true },
     });
-
-    
   };
+
+  const acceptAndSend = () => {
+
+    let matchingIssues;
+    if (reporting.issue3 && reporting.issue3.matchingIssues) { // Check if reporting.issue3 and matchingIssues exist
+      matchingIssues = reporting.issue3.matchingIssues.reduce((result, item) => {
+        // Extract the title and options array from each item
+        const { title, options } = item;
+        // Extract the names from the options array and join them with '&'
+        const optionNames = options.map(option => option.label.name).join(' & ');
+        // Set the title as the key and the joined option names as the value in the result object
+        result[title] = optionNames;
+        return result;
+      }, {});
+    } 
+
+    let where;
+    if (reporting.where.address && reporting.where.coords === undefined) {
+      let htmlString = '<p>';
+      for (const key in reporting.where.address) {
+        if (reporting.where.address.hasOwnProperty(key)) {
+          htmlString += `<strong>${key}:</strong> ${reporting.where.address[key]}<br>`;
+        }
+      }
+      htmlString += '</p>';
+      where = htmlString
+    } else if (reporting.where.location) {
+      where = reporting.where.location
+    } else {
+      const longitude = reporting.where.coords.longitude
+      const latitude = reporting.where.coords.latitude
+      const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+      where = `<a href="${url}">${url}</a>`;
+    }
+
+    const bodyPrep = {};
+
+    if (reporting.where) {
+      bodyPrep[reporting.where.title] = where;
+    }
+
+    if (reporting.info) {
+      bodyPrep[reporting.info.title] = reporting.info.details;
+    }
+
+    if (reporting.issue) {
+      bodyPrep[reporting.issue.title] = reporting.issue.answer.join(" ");
+    }
+
+    if (reporting.issue2) {
+      bodyPrep[reporting.issue2.title] = reporting.issue2.answer.join(" ");
+    }
+
+    let body = bodyPrep
+
+    if (matchingIssues !== undefined) {
+      body = { ...bodyPrep, ...matchingIssues };
+    }
+
+
+    let modifiedImages = []
+    if (reporting.info?.photos) {
+      modifiedImages = reporting.info?.photos.map(image => ({
+        ...image,
+      content: image.content.replace(/^data:image\/(png|jpg|jpeg);base64,/, '') // Remove prefix
+      }));
+    }
+
+
+    body = JSON.stringify(body, null, 2)
+
+    const payload = {
+      "to": 7,
+      "body": body,
+      "from": reporting.contact.email,
+      "subject": "Reporting issue",
+      "files": modifiedImages,
+      "displayName": `${reporting.personal.firstName} ${reporting.personal.lastName}`
+    }
+
+    const data = JSON.stringify(payload)
+
+    // Perform the API POST request
+    fetch('https://internal-api.wmca.org.uk/emails/api/email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: data
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Email sent successfully:', data);
+        setError(null)
+      })
+      .catch(error => {
+        setError('Problem sending you form')
+        console.error('Error sending email:', error);
+      });
+
+  }
+  const ErrorMessage = () => {
+    return (
+      <div ref={errorMessageRef} className="wmnds-msg-summary wmnds-msg-summary--error wmnds-m-b-lg">
+        <div className="wmnds-msg-summary__header">
+          <svg className="wmnds-msg-summary__icon">
+            <use xlinkHref="#wmnds-general-warning-triangle" href="#wmnds-general-warning-triangle"></use>
+          </svg>
+          <h3 className="wmnds-msg-summary__title">Error message</h3>
+        </div>
+        <div className="wmnds-msg-summary__info">
+          {error}
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (error !== null && errorMessageRef.current) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [error]);
 
   return (
     <>
@@ -114,7 +237,7 @@ const AnswerCheck = () => {
         <h1 className="wmnds-fe-question">
           Check your answers
         </h1>
-
+        {error !== null && <ErrorMessage />}
         <table className="wmnds-table wmnds-m-b-xl wmnds-table--without-header">
           <h3>
             About the issue
@@ -217,7 +340,8 @@ const AnswerCheck = () => {
               <td data-header="Header 2">
                 {reporting.info?.photos.map((image, index) => (
                   <div key={index} className="preview-image">
-                    <img className="wmnds-m-t-md wmnds-m-b-lg" src={image} alt={`Preview ${index + 1}`} />
+                    <p className="wmnds-m-b-sm">{image.name}</p>
+                    <img className="wmnds-m-b-lg" src={image.content} alt={`Preview ${index + 1}`} />
                   </div>
                 ))} 
               </td>
@@ -283,17 +407,16 @@ const AnswerCheck = () => {
         <p>By submitting this request you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
         <Checkboxes
           title=""
-          options={options}
+          options={[
+            { label: policy(), value: 'option1', checked: checkbox1Checked },
+            { label: terms(), value: 'option2', checked: checkbox2Checked },
+          ]}
           onCheckboxChange={handleCheckboxChange}
         />
 
-            <button className="wmnds-btn wmnds-btn--start" type="button">
-              Accept and send
-              <svg className="wmnds-btn__icon wmnds-btn__icon--right ">
-                <use xlinkHref="#wmnds-general-chevron-right" href="#wmnds-general-chevron-right"></use>
-              </svg>
-            </button>
-          </div>
+        <ButtonStart label={"Accept and send"} hasIcon isDisabled={isSubmitDisabled} onClick={acceptAndSend}/>
+
+      </div>
     </>
   );
 }

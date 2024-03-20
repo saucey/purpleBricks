@@ -6,7 +6,6 @@ import { ButtonSecondary, ButtonCta } from 'wmca-shared-components';
 import { plusIcon, minusIcon, liveLocationIcon } from '../utils/index'
 import Search from '@arcgis/core/widgets/Search'; // Import Search widget directly
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
 import PictureMarkerSymbol from '@arcgis/core/symbols/PictureMarkerSymbol';
 

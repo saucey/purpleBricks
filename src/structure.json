@@ -644,6 +644,12 @@
     {
       "title": "Check you answers",
       "id": 22
+    },
+    {
+      "title": "We've received your form",
+      "id": 23,
+      "heading": "What happens next",
+      "content": "<p>You’ll receive an email to confirm that we have received your report of an issue.</p><p>It can take up to XX weeks to process a request. It may take longer if we need more information from you.</p><p>If you have not received a response within 2 days, please contact our Customer Services team on 0345 303 6760.</p>"
     }
   ]
 }
