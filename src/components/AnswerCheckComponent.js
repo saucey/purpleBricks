@@ -75,11 +75,6 @@ const AnswerCheck = () => {
     return (<p>Agree to the <a href="https://www.tfwm.org.uk/policies/" target="_blank" rel="noreferrer">privacy policy</a></p>);
   }
 
-  const options = [
-    { label: policy(), value: 'option1', checked: false },
-    { label: terms(), value: 'option2', checked: false }, // Using the terms component as label
-  ];
-
   // State to manage the selected checkboxes
   const [checkbox1Checked, setCheckbox1Checked] = useState(false);
   const [checkbox2Checked, setCheckbox2Checked] = useState(false);
@@ -183,7 +178,7 @@ const AnswerCheck = () => {
       "body": body,
       "from": reporting.contact.email,
       "subject": "Reporting issue",
-      // "files": modifiedImages,
+      "files": modifiedImages,
       "displayName": `${reporting.personal.firstName} ${reporting.personal.lastName}`
     }
 
