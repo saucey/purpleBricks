@@ -61,7 +61,7 @@
           "name": "street"
         },
         {
-          "label": "Direction of travel <br /> For example, towwars Birmingham",
+          "label": "Direction of travel <br /> For example, towars Birmingham",
           "name": "direction"
         },
         {

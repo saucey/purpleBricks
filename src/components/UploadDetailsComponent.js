@@ -14,7 +14,6 @@ const UploadDetailsComponent = () => {
 
   useEffect(() => {
 
-    console.log(formData, 'form data')
     // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
@@ -113,6 +112,7 @@ const UploadDetailsComponent = () => {
     <>
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
+          <h3>{pageData.id}</h3>
           <div className="wmnds-progress-indicator">
             Section {pageData.section} of 2
             <h4>About the issue</h4>

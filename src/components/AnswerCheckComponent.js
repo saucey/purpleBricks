@@ -11,9 +11,11 @@ const AnswerCheck = () => {
   const [reporting, setReporting] = useState({}); 
   const [error, setError] = useState(null); 
   const errorMessageRef = useRef(null);
+  const matchingIssuesRef = useRef([]);
 
 
   useEffect(() => {
+
     let newReporting = {};
     formData
       .filter(item => previousSteps.includes(item.pageId))
@@ -28,19 +30,28 @@ const AnswerCheck = () => {
           case 14:
           case 18:
             const matchingSelectors = selectPage.options.filter(opt => item.selectedOptions?.includes(opt.label.value));
-            const matchingIssues = reportFormData.pages.filter(page => item.selectedOptions?.includes(page.id));
+            matchingIssuesRef.current = reportFormData.pages.filter(page => item.selectedOptions?.includes(page.id));
             newReporting['issue2'] = { ...newReporting['issue2'], title: selectPage?.title, answer: matchingSelectors.map(ex => ex.label.name), pageId: item.pageId };
-            newReporting['issue3'] = { ...newReporting['issue3'], matchingIssues };
+            newReporting['issue3'] = { ...newReporting['issue3'], matchingIssues: matchingIssuesRef.current };
             break;
           case 12:
-            if (newReporting['issue3'] && newReporting['issue3']?.matchingIssues) {
-              const filteredArray = newReporting['issue3'].matchingIssues.map(section => ({
+            if (!newReporting['issue3']) {
+              newReporting['issue3'] = {}; // Initialize issue3 if it doesn't exist
+            }
+
+            if (newReporting['issue3'] && (matchingIssuesRef.current || newReporting['issue3']?.matchingIssues)) {
+
+              const matchingIssues = matchingIssuesRef.current || newReporting['issue3']?.matchingIssues;
+
+              const filteredArray = matchingIssues.map(section => ({
                 ...section,
                 options: item.selectedOptions.length === 0 ? [] : section.options.filter(option => item.selectedOptions.includes(option.label.name))
               }));
+
               const finalFilteredArray = item.selectedOptions.length === 0 ? filteredArray : filteredArray.filter(section => section.options.length > 0);
+
               newReporting['issue3'] = { ...newReporting['issue3'], matchingIssues: finalFilteredArray, pageId: item.pageId };
-            } 
+            }
             break;
           case 13:
           case 3:

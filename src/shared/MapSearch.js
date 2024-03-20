@@ -14,7 +14,6 @@ const MapSearch = ({ redirect, coords = null }) => {
   const viewRef = useRef(null);
   const markerRef = useRef(null);
   const addPointMode = useRef(false);
-  // const [addPointMode, setAddPointMode] = useState(false);
   const [address, setAddress] = useState(null);
   const [buttonText, setButtonText] = useState('Add point');
   const [getCoords, setCoords] = useState(coords);

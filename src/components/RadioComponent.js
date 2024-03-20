@@ -64,6 +64,7 @@ const RadioComponent = () => {
     <>
       {pageData && (
         <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
+          <h3>{pageData.id}</h3>
           <h1 className="heading-2">{pageData.title}</h1>
           { pageData.options && (
             <Radios
