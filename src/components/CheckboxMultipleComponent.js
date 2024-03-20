@@ -92,7 +92,6 @@ const CheckboxMultipleComponent = () => {
   return (
     <>
       <div className="wmnds-col-1 wmnds-p-lg wmnds-bg-white">
-        <h3>{pageData.id}</h3>
         <div className="wmnds-progress-indicator">
           Section 1 of 2
           <h4>About the issue</h4>
