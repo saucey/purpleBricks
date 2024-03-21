@@ -14,7 +14,7 @@ const StartPage = () => {
   const start = () => {
     return (
       <>
-        <div className="wmnds-col-1  wmnds-p-lg">
+        <div className="wmnds-col-1 wmnds-col-md-3-4">
           <h1 className="wmnds-fe-question">
             Report an issue
           </h1>

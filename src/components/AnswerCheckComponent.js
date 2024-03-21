@@ -4,6 +4,7 @@ import { FormDataContext } from '../globalState/FormDataContext';
 import reportFormData from '../structure.json';
 import { Checkboxes, ButtonStart } from 'wmca-shared-components';
 import MapReview from '../shared/MapReview';
+import { useNavigate } from 'react-router-dom';
 
 const AnswerCheck = () => {
   const [formDataState, formDataDispatch] = useContext(FormDataContext);
@@ -12,6 +13,7 @@ const AnswerCheck = () => {
   const [error, setError] = useState(null); 
   const errorMessageRef = useRef(null);
   const matchingIssuesRef = useRef([]);
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -213,6 +215,7 @@ const AnswerCheck = () => {
       .then(data => {
         console.log('Email sent successfully:', data);
         setError(null)
+        navigate('/reporting-complete')
       })
       .catch(error => {
         setError('Problem sending you form')
