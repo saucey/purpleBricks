@@ -61,7 +61,7 @@
           "name": "street"
         },
         {
-          "label": "Direction of travel <br /> For example, towars Birmingham",
+          "label": "Direction of travel <br /> For example, towards Birmingham",
           "name": "direction"
         },
         {
@@ -117,12 +117,12 @@
       },
       "options": [
         {
-          "label": "Email address \n For example, name@example.com",
+          "label": "Email address, \n For example, name@example.com",
           "name": "email",
           "type": "email"
         },
         {
-          "label": "Phone number \n For exmple, 07700900457",
+          "label": "Phone number, \n For exmple, 07700900457",
           "type": "number",
           "name": "phone"
         }
