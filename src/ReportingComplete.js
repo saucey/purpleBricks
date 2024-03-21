@@ -9,9 +9,6 @@ const ReportingComplete = () => {
   const { answerChecksSubmitted } = formDataState;
   const navigate = useNavigate()
 
-  console.log(answerChecksSubmitted)
-
-
   useEffect(() => {
     if (!answerChecksSubmitted) {
       navigate('/')
@@ -21,7 +18,7 @@ const ReportingComplete = () => {
       type: 'ANSWER_CHECKS_SUBMITTED',
       payload: { answerChecksSubmitted: false }
     });
-  }, []);
+  });
 
 
   const complete = () => {
