@@ -1,11 +1,8 @@
 import './App.css';
-import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ReportingComplete = () => {
-
-  const navigate = useNavigate();
 
 
 
@@ -25,7 +22,7 @@ const ReportingComplete = () => {
               <Link to="/" class="wmnds-breadcrumb__link">Report a problem with a bus stop or park and ride</Link>
             </li>
             <li class="wmnds-breadcrumb__list-item">
-              <a href="#" class="wmnds-breadcrumb__link wmnds-breadcrumb__link--current" aria-current="page">Report complete</a>
+              <span class="wmnds-breadcrumb__link wmnds-breadcrumb__link--current" aria-current="page">Report complete</span>
             </li>
           </ol>
         </nav>

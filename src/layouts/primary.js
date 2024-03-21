@@ -35,7 +35,7 @@ const AppLayoutPrimary = ({ children }) => {
             <Link to="/" class="wmnds-breadcrumb__link">Report a problem with a bus stop or park and ride</Link>
           </li>
           <li class="wmnds-breadcrumb__list-item">
-            <a href="#" class="wmnds-breadcrumb__link wmnds-breadcrumb__link--current" aria-current="page">Report a problem with a bus stop or park and ride</a>
+            <span class="wmnds-breadcrumb__link wmnds-breadcrumb__link--current" aria-current="page">Report a problem with a bus stop or park and ride</span>
           </li>
         </ol>
       </nav>
