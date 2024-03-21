@@ -123,6 +123,7 @@
         },
         {
           "label": "Phone number \n For exmple, 07700900457",
+          "type": "number",
           "name": "phone"
         }
       ]
