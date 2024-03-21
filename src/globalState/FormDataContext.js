@@ -12,7 +12,7 @@ export const FormDataProvider = (props) => {
     answerChecks: false,
     previousSteps: [], // Store previous steps in an array
     formData: [],
-    hasReachedConfirmation: false,
+    answerChecksSubmitted: false,
   };
 
   // Reducer function
@@ -55,10 +55,10 @@ export const FormDataProvider = (props) => {
           // futureStep: newFurureStep
         };
       }
-      case 'REACHED_ANSWER_CHECKS': {
+      case 'ANSWER_CHECKS_SUBMITTED': {
         return {
           ...state,
-          answerChecks: action.payload.answerChecks,
+          answerChecksSubmitted: action.payload.answerChecksSubmitted,
         };
       }
       default:

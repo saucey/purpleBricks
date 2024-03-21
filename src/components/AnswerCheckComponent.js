@@ -215,6 +215,12 @@ const AnswerCheck = () => {
       .then(data => {
         console.log('Email sent successfully:', data);
         setError(null)
+
+        formDataDispatch({
+          type: 'ANSWER_CHECKS_SUBMITTED',
+          payload: { answerChecksSubmitted: true, }
+        });
+        
         navigate('/reporting-complete')
       })
       .catch(error => {
