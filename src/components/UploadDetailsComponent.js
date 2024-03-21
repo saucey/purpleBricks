@@ -14,7 +14,6 @@ const UploadDetailsComponent = () => {
 
   useEffect(() => {
 
-    console.log(formData, 'form data')
     // Filter the page data based on the current step ID
     const currentPageData = reportFormData.pages.find(page => page.id === currentStep);
     setPageData(currentPageData);
