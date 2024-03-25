@@ -150,7 +150,14 @@ const AnswerCheck = () => {
       where = `<a href="${url}">${url}</a>`;
     }
 
-    const bodyPrep = {};
+    // const bodyPrep = {};
+
+    const bodyPrep = {
+      "First Name": reporting.personal.firstName,
+      "Last Name": reporting.personal.lastName,
+      "Email": reporting.contact.email,
+      "Phone": reporting.contact.phone
+    }
 
     if (reporting.where) {
       bodyPrep[reporting.where.title] = where;
@@ -182,7 +189,6 @@ const AnswerCheck = () => {
       content: image.content.replace(/^data:image\/(png|jpg|jpeg);base64,/, '') // Remove prefix
       }));
     }
-
 
     body = JSON.stringify(body, null, 2)
 
