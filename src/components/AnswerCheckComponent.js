@@ -150,7 +150,14 @@ const AnswerCheck = () => {
       where = `<a href="${url}">${url}</a>`;
     }
 
-    const bodyPrep = {};
+    // const bodyPrep = {};
+
+    const bodyPrep = {
+      "First Name": reporting.personal.firstName,
+      "Last Name": reporting.personal.lastName,
+      "Email": reporting.contact.email,
+      "Phone": reporting.contact.phone
+    }
 
     if (reporting.where) {
       bodyPrep[reporting.where.title] = where;
@@ -183,7 +190,6 @@ const AnswerCheck = () => {
       }));
     }
 
-
     body = JSON.stringify(body, null, 2)
 
     const payload = {
@@ -215,6 +221,12 @@ const AnswerCheck = () => {
       .then(data => {
         console.log('Email sent successfully:', data);
         setError(null)
+
+        formDataDispatch({
+          type: 'ANSWER_CHECKS_SUBMITTED',
+          payload: { answerChecksSubmitted: true, }
+        });
+        
         navigate('/reporting-complete')
       })
       .catch(error => {
