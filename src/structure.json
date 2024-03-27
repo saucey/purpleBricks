@@ -61,6 +61,10 @@
           "name": "street"
         },
         {
+          "label": "Landmark or road junction",
+          "name": "landmark"
+        },
+        {
           "label": "Direction of travel <br /> For example, towards Birmingham",
           "name": "direction"
         },
@@ -219,7 +223,7 @@
       ]
     },
     {
-      "title": "What is the maintenace issue?",
+      "title": "What is the maintenance issue?",
       "section": "1", 
       "id": 9,
       "options": [
@@ -403,8 +407,8 @@
         },
         {
           "label": {
-            "name": "Pole is damaged or leading",
-            "value": "Pole is damaged or leading"
+            "name": "Pole is damaged or leaning",
+            "value": "Pole is damaged or leaning"
           }
         },
         {
@@ -415,8 +419,8 @@
         },
         {
           "label": {
-            "name": "Footway is inm poor condition",
-            "value": "Footway is inm poor condition"
+            "name": "Footway is in poor condition",
+            "value": "Footway is in poor condition"
           }
         }
       ]
@@ -453,7 +457,7 @@
       "nextId": 18,
       "options": [
         {
-          "label": "The Hawthrorns"
+          "label": "The Hawthorns"
         },
         {
           "label": "Wednesbury Parkway"

@@ -63,7 +63,7 @@ const AnswerCheck = () => {
             newReporting['where'] = { ...newReporting['where'], title: selectPage?.title, location: item.selectedValue, pageId: item.pageId };
             break;
           case 2:
-            newReporting['where'] = { ...newReporting['where'], title: selectPage?.title2, address: { town: item.inputValues.town, street: item.inputValues.street, direction: item.inputValues.direction, number: item.inputValues.number }, coords: item.coords, pageId: item.pageId };
+            newReporting['where'] = { ...newReporting['where'], title: selectPage?.title2, address: { town: item.inputValues.town, street: item.inputValues.street, landmark: item.inputValues.landmark, direction: item.inputValues.direction, number: item.inputValues.number }, coords: item.coords, pageId: item.pageId };
             break;         
           case 5:
             newReporting['contact'] = { ...newReporting['contact'], email: item.inputValues.email || "", phone: item.inputValues.phone || "", pageId: item.pageId };
@@ -279,6 +279,7 @@ const AnswerCheck = () => {
                     {reporting.where?.location}<br />
                     {reporting.where?.address?.town}<br />
                     {reporting.where?.address?.street}<br />
+                    {reporting.where?.address?.landmark}<br />
                     {reporting.where?.address?.direction}<br />
                     {reporting.where?.address?.number}
                   </>
